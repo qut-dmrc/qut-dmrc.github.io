@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DMRC - research code repository</title>
+    <style>
+      body {
+        --background: #0a0a0f;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: var(--background);
+      }
+      .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+        gap: 10px;
+        padding: 0px;
+        margin: 64px;
+        min-width: 512px;
+        background-color: white;
+        transform: rotate(-35deg) skew(22deg);
+        transform-origin: 25% 20%;
+      }
+      .grid-item {
+        background-color: var(--background);
+        color: white;
+        padding-block: 16px;
+        padding-inline: 20px;
+      }
+      .logo {
+        padding-bottom: 8rem;
+        width: 284px;
+        border: 1px solid white;
+      }
+      .logo h1 {
+        all: unset;
+        font-size: 2em;
+        font-weight: bold;
+        display: block;
+      }
+      .logo p {
+        all: unset;
+        font-size: 1.25rem;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-item logo">
+        <h1>DMRC</h1>
+        <p>research code repository</p>
+      </div>
+    </div>
+  </body>
+</html>
