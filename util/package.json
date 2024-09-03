@@ -2,6 +2,6 @@
     "scripts": {
         "import": "node import.js",
         "mirror": "node mirror.js",
-        "build": "npm run mirror"
+        "build": "npm run import && npm run mirror"
     }
 }
