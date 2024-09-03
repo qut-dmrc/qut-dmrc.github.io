@@ -3,5 +3,8 @@
   "homepage": "https://qut-dmrc.github.io/qut-dmrc.github.io",
   "dependencies": {
     "github-pages-router": "^1.0.1"
+  },
+  "scripts": {
+    "build": "cd ./util && npm run build"
   }
 }
