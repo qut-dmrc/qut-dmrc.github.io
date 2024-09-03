@@ -46,7 +46,7 @@
       this.viewTransition(contentUrl);
     }
     viewTransition(contentUrl) {
-      // if (!document.startViewTransition) return this.updateContent(contentUrl);
+      if (!document.startViewTransition) return this.updateContent(contentUrl);
       document.startViewTransition(() => {
         this.updateContent(contentUrl);
       });
