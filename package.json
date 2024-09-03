@@ -1,0 +1,7 @@
+{ 
+  "type": "module",
+  "homepage": "https://qut-dmrc.github.io/qut-dmrc.github.io",
+  "dependencies": {
+    "github-pages-router": "^1.0.1"
+  }
+}
