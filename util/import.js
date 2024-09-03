@@ -71,7 +71,7 @@ function copyPackageSubfolderJsFiles(packages, subfolders, destinationPath) {
     });
 }
 
-const packages = ['github-pages-router'];
+const packages = []; // ['github-pages-router'];
 const subfolders = ['dist'];
 const destinationPath = 'core';
 
