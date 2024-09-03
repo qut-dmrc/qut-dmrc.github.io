@@ -1,115 +1,74 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DMRC - Research code repository</title>
-    <style>
-      body {
-        --background: #0a0a0f;
-        --foreground: white;
-      }
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        color:var(--foreground);
-        padding: 20px;
-        background-color: var(--background);
-      }
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-        gap: 10px;
-        padding: 0px;
-        margin: 64px;
-        min-width: 512px;
-        background-color: white;
-        transform: rotate(-35deg) skew(22deg);
-        transform-origin: 25% 20%;
-      }
-      .grid-item {
-        background-color: var(--background);
-        color: white;
-        padding-block: 16px;
-        padding-inline: 20px;
-      }
-      .logo {
-        padding-bottom: 8rem;
-        width: 284px;
-        border: 1px solid white;
-      }
-      .logo h1 {
-        all: unset;
-        font-size: 2em;
-        font-weight: bold;
-        display: block;
-      }
-      .logo p {
-        all: unset;
-        font-size: 1.25rem;
-        display: block;
-      }
-    </style>
-  </head>
-  <body>
-    <!--<div class="grid-container">
-      <div class="grid-item logo">
-        <h1>DMRC</h1>
-        <p>research code repository</p>
-      </div>
-    </div>-->
 
-    <ghp-router>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DMRC - Research code repository</title>
+  <link rel="stylesheet" href="./core/main.css" />
+</head>
 
-      <ghp-route 
-        href="./" 
-        content="./from/base.html"
-      ></ghp-route>
+<body>
 
-      <ghp-route
-        href="./page1"
-        content="./from/page1.html"
-      ></ghp-route>
-    
-      <ghp-route
-        href="./page2"
-        content="./from/page2.html"
-      ></ghp-route>
-    
-      <!-- Your HTML layout -->
-      
-      <nav role="navigation">
-        <span class="contents-title">Contents</span>
-        <ul>
-          <li>
-            <ghp-navlink>
-              <a href="./" aria-current="">H0</a>
-            </ghp-navlink>
-          </li>
 
-          <li>
-            <ghp-navlink>
-              <a href="./page1" aria-current="">P1</a>
-            </ghp-navlink>
-          </li>
+  <ghp-router>
 
-          <li>
-            <ghp-navlink>
-              <a href="./page2" aria-current="">P2</a>
-            </ghp-navlink>
-          </li>
-        </ul>
-      </nav>
+    <ghp-route href="./" content="./from/base.html"></ghp-route>
+    <ghp-route href="./page1" content="./from/page1.html"></ghp-route>
+    <ghp-route href="./page2" content="./from/page2.html"></ghp-route>
+    <ghp-route href="./page3" content="./from/page3.html"></ghp-route>
 
-      <main>
-        <!--
+    <!-- Your HTML layout -->
+
+    <nav role="navigation" class="grid-container">
+      <ghp-navlink>
+        <a href="./" aria-current="">
+          <div class="grid-item logo">
+            <h1>DMRC</h1>
+            <p>research code repository</p>
+          </div>
+        </a>
+      </ghp-navlink>
+
+      <ghp-navlink>
+        <a href="./page1" aria-current="">
+          <div class="grid-item">
+            <h1>PAGE 1</h1>
+            <p>linked content</p>
+          </div>
+        </a>
+      </ghp-navlink>
+
+      <ghp-navlink>
+        <a href="./page2" aria-current="">
+          <div class="grid-item">
+            <h1>PAGE 2</h1>
+            <p>linked content</p>
+          </div>
+        </a>
+      </ghp-navlink>
+
+      <ghp-navlink>
+        <a href="./page3" aria-current="">
+          <div class="grid-item last-item">
+            <h1>PAGE 3</h1>
+            <p>linked content</p>
+          </div>
+        </a>
+      </ghp-navlink>
+
+    </nav>
+
+    <main>
+      <!--
           Leave this empty.
           Your route related HTML content will be loaded here.
         -->
-      </main>
-    
-    </ghp-router>
-    
+    </main>
+
+  </ghp-router>
+
   <script src="./core/github-pages-router/dist/github-pages-router.js"></script>
-  </body>
+</body>
+
 </html>
