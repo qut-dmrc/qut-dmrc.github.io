@@ -1,0 +1,7 @@
+{   "type": "module",
+    "scripts": {
+        "import": "node import.js",
+        "mirror": "node mirror.js",
+        "build": "npm run mirror"
+    }
+}
