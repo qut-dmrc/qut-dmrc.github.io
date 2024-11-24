@@ -22,7 +22,6 @@ const speedFactor = 0.75;
 // Define the time factor to control the interpolation speed
 const timeFactor = 0.005; // Adjust this value to control the interpolation speed (lower value = slower)
 
-
 // Function to update the panning
 function updatePanning() {
   // Interpolate the current panning position towards the target position
@@ -52,7 +51,8 @@ function applyPanningState() {
   }
 }
 
-document.addEventListener('mousemove', function(event) {
+// Function to handle mousemove events
+function handleMouseMove(event) {
   // Calculate the panning target
   if (event.clientX < horizontalEdgeDistance) {
     xPanTarget = (horizontalEdgeDistance - event.clientX) * speedFactor;
@@ -72,7 +72,29 @@ document.addEventListener('mousemove', function(event) {
 
   // Start the panning update loop
   updatePanning();
-});
+}
+
+// Function to detect if the device is a mobile device
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Add or remove the event listener based on the device type
+function setupEventListeners() {
+  if (isMobileDevice()) {
+    console.log('Mobile device detected. Removing mousemove event listener.');
+    document.removeEventListener('mousemove', handleMouseMove);
+  } else {
+    console.log('Desktop device detected. Adding mousemove event listener.');
+    document.addEventListener('mousemove', handleMouseMove);
+  }
+}
 
 // Apply the panning state when the page loads
 applyPanningState();
+
+// Initial setup of event listeners
+setupEventListeners();
+
+// Optional: Re-evaluate the device type on window resize (in case the user switches between mobile/desktop modes)
+window.addEventListener('resize', setupEventListeners);
