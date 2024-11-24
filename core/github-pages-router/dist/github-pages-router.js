@@ -76,6 +76,7 @@
       
       const { contentElement } = this;
       //if (!contentElement) return;
+      console.log(this)
       try {
         if (this.contentMap.has(url)) {
           contentElement.innerHTML = document.location.href; //this.contentMap.get(url);
