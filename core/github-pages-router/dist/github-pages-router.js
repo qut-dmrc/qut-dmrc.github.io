@@ -41,7 +41,7 @@
       
       // This + console.logging in the callback seems to hackey render block
       // -> not always
-      this.contentElement.innerHTML = 'Flash of content'
+      this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? '' // 'Flash of content'
 
       // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
 
