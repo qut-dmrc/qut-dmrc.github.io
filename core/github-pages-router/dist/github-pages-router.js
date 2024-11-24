@@ -35,7 +35,13 @@
       if (!this.contentElement) console.error("Cannot find contentElement");
       
       // This + console.logging in the callback seems to hackey render block
-      this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      // -> not always
+      this.textContent.innerHTML = 'Flash of content';
+      
+      document.startViewTransition(() => { 
+        this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      })
+
     }
 
     handleEvent(event) {
