@@ -54,7 +54,7 @@
       // -> not always
       // this.contentElement.innerHTML = 'Flash of content';
 
-      this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
 
     }
 
