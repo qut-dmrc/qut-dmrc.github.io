@@ -86,8 +86,11 @@
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
-      if(this.contentElement.innerHTML.length == 0)  contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
-      
+      if(this.contentElement.innerHTML.length == 0) {
+        console.log("Prefilling");
+        this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      }
+
       const transition = document.startViewTransition(async () => {
         await this.updateContent(contentUrl)
       });
