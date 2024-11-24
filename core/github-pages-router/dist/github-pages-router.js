@@ -96,13 +96,13 @@
       await transition.finished;
     }
     
-    async updateContent(url,keep,drop) {
+    async updateContent(url) {
       
       const { contentElement } = this;
       if (!contentElement) return;
       
       //this.contentElement.innerHTML = await (await fetch(url)).text();
-        //try {
+        try {
           if (this.contentMap.has(url)) {
             console.log("setting from cache")
             contentElement.innerHTML = this.contentMap.get(url);
@@ -118,10 +118,9 @@
             
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-        //} catch (error) {
-          //console.error(error);
-       
-        //}
+        } catch (error) {
+          console.error(error);
+        }
   
     }
   }
@@ -152,7 +151,7 @@
   class GHPRoute extends HTMLElement {
     router = undefined;
 
-    connectedCallback() {
+    async connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
@@ -168,7 +167,7 @@
       this.router.routes.push({ href, content });
 
       if (new URL(href, document.baseURI).toString() == location.toString())
-        this.router.viewTransition(
+        await this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );
     }
