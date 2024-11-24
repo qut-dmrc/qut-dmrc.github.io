@@ -5,6 +5,7 @@
 body {
   --background: #16161b;
   --foreground: white;
+  overflow: hidden;
 }
 
 body {
@@ -15,6 +16,13 @@ body {
   background-color: var(--background);
 }
 
+.panner {
+  width:100%;
+  height: 100%;
+  margin: auto;
+  position: relative;
+}
+
 .grid-container {
   column-count: 2;
   column-gap: 0%;
@@ -23,7 +31,7 @@ body {
   max-width: 512px;
   background-color: white;
   transform: rotate(-35deg) skew(22deg);
-  transform-origin: 78% 20%;
+  /*transform-origin: 78% 20%;*/
 }
 
 .grid-item {
