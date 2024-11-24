@@ -20,7 +20,9 @@
 
     <!-- Your HTML layout -->
 
+    <div class="panner">
     <nav role="navigation" class="grid-container">
+
       <ghp-navlink>
         <a href="./" aria-current="">
           <div class="grid-item logo">
@@ -40,6 +42,16 @@
       </ghp-navlink>
 
       <ghp-navlink>
+       
+        <div class="grid-item" style="width:100%!important;">
+          <h1>ABOUT</h1>
+          <p>Some content</p>
+        </div>
+      
+    </ghp-navlink>
+
+
+      <ghp-navlink>
         <a href="./page2" aria-current="">
           <div class="grid-item">
             <h1>PAGE 2</h1>
@@ -57,7 +69,9 @@
         </a>
       </ghp-navlink>
 
+     
     </nav>
+  </div>
 
     <main>
       <!--
@@ -69,6 +83,8 @@
   </ghp-router>
 
   <script src="./core/github-pages-router/dist/github-pages-router.js"></script>
+  <script src="./core/grid-panner/panning.js"></script>
+
 </body>
 
 </html>

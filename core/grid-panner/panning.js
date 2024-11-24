@@ -1,36 +1,62 @@
+let xPanTarget = 0;
+let yPanTarget = 0;
+let xPanCurrent = 0;
+let yPanCurrent = 0;
+
+const gridContainer = document.querySelector('.panner');
+const containerRect = gridContainer.getBoundingClientRect();
+const containerWidth = containerRect.width;
+const containerHeight = containerRect.height;
+
+// Define the edge distances as percentages of the viewport width and height
+const horizontalEdgeDistancePercentage = 50; // 5% of the viewport width
+const verticalEdgeDistancePercentage = 40; // 10% of the viewport height
+
+// Calculate the actual edge distances in pixels
+const horizontalEdgeDistance = (horizontalEdgeDistancePercentage / 100) * window.innerWidth;
+const verticalEdgeDistance = (verticalEdgeDistancePercentage / 100) * window.innerHeight;
+
+// Define the speed factor (you can adjust this)
+const speedFactor = 0.75;
+
+// Easing function for smooth transition
+function easeInOutQuad(t) {
+  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+}
+
+// Function to update the panning
+function updatePanning() {
+  // Interpolate the current panning position towards the target position
+  xPanCurrent += (xPanTarget - xPanCurrent) * 0.1;
+  yPanCurrent += (yPanTarget - yPanCurrent) * 0.1;
+
+  // Apply the transformation to the grid container
+  gridContainer.style.transform = `translate(${xPanCurrent}px, ${yPanCurrent}px)`;
+
+  // Continue animating until the target position is reached
+  if (Math.abs(xPanTarget - xPanCurrent) > 0.1 || Math.abs(yPanTarget - yPanCurrent) > 0.1) {
+    requestAnimationFrame(updatePanning);
+  }
+}
+
 document.addEventListener('mousemove', function(event) {
-  const gridContainer = document.querySelector('.panner');
-  const containerRect = gridContainer.getBoundingClientRect();
-  const containerWidth = containerRect.width;
-  const containerHeight = containerRect.height;
-
-  // Define the edge distances as percentages of the viewport width and height
-  const horizontalEdgeDistancePercentage = 40; // 5% of the viewport width
-  const verticalEdgeDistancePercentage = 20; // 5% of the viewport height
-
-  // Calculate the actual edge distances in pixels
-  const horizontalEdgeDistance = (horizontalEdgeDistancePercentage / 100) * window.innerWidth;
-  const verticalEdgeDistance = (verticalEdgeDistancePercentage / 100) * window.innerHeight;
-
-  // Define the speed factor (you can adjust this)
-  const speedFactor = 0.5;
-
-  // Calculate the panning amount
-  let xPan = 0;
-  let yPan = 0;
-
+  // Calculate the panning target
   if (event.clientX < horizontalEdgeDistance) {
-    xPan = (horizontalEdgeDistance - event.clientX) * speedFactor;
+    xPanTarget = (horizontalEdgeDistance - event.clientX) * speedFactor;
   } else if (event.clientX > containerWidth - horizontalEdgeDistance) {
-    xPan = -(event.clientX - (containerWidth - horizontalEdgeDistance)) * speedFactor;
+    xPanTarget = -(event.clientX - (containerWidth - horizontalEdgeDistance)) * speedFactor;
+  } else {
+    xPanTarget = 0;
   }
 
   if (event.clientY < verticalEdgeDistance) {
-    yPan = (verticalEdgeDistance - event.clientY) * speedFactor;
+    yPanTarget = (verticalEdgeDistance - event.clientY) * speedFactor;
   } else if (event.clientY > containerHeight - verticalEdgeDistance) {
-    yPan = -(event.clientY - (containerHeight - verticalEdgeDistance)) * speedFactor;
+    yPanTarget = -(event.clientY - (containerHeight - verticalEdgeDistance)) * speedFactor;
+  } else {
+    yPanTarget = 0;
   }
 
-  // Apply the transformation to the grid container
-  gridContainer.style.transform = `translate(${xPan}px, ${yPan}px)`;
+  // Start the panning update loop
+  updatePanning();
 });

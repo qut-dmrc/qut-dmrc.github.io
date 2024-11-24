@@ -17,8 +17,8 @@ body {
 }
 
 .panner {
-  width:100%;
-  height: 100%;
+  width:100dvw;
+  height: 90dvh;
   margin: auto;
   position: relative;
 }
@@ -28,10 +28,10 @@ body {
   column-gap: 0%;
   column-width: 100%;
   width: 100%;
-  max-width: 512px;
+  max-width: 640px;
   background-color: white;
   transform: rotate(-35deg) skew(22deg);
-  /*transform-origin: 78% 20%;*/
+  transform-origin: 78% 20%;
 }
 
 .grid-item {
