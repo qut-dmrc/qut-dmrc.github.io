@@ -9,7 +9,9 @@
   })
 
   window.addEventListener('pagereveal', (event) => { 
-    console.log(localStorage.getItem('lastContent'))
+    let last = localStorage.getItem('lastContent')
+    document.querySelector('main').innerHTML = last;
+    console.log(last)
   })
   /**
    * Web component <ghp-router>. All other ghp-* components must be inside a <ghp-router>.
@@ -46,10 +48,6 @@
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }
 
-     window.addEventListener('pagereveal', (event) => { 
-       this.contentElement.innerHTML  = localStorage.getItem('lastContent')
-     })
-      
       // This + console.logging in the callback seems to hackey render block
       // -> not always
       // this.contentElement.innerHTML = 'Flash of content';
