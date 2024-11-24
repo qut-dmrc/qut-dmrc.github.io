@@ -45,10 +45,10 @@
       history.pushState({}, "", href);
       this.viewTransition(contentUrl);
     }
-    viewTransition(contentUrl) {
-      if (!document.startViewTransition) return this.updateContent(contentUrl);
-      document.startViewTransition(() => {
-        this.updateContent(contentUrl);
+    async viewTransition(contentUrl) {
+      if (!document.startViewTransition) return await this.updateContent(contentUrl);
+      document.startViewTransition(async () => {
+        await this.updateContent(contentUrl);
       });
     }
     async updateContent(url) {
