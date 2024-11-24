@@ -72,7 +72,7 @@
       });
     }
 
-    async updateContent(url,trig = true) {
+    async updateContent(url) {
       
       const { contentElement } = this;
       if (!contentElement) return;
@@ -82,6 +82,7 @@
           if (this.contentMap.has(url)) {
             contentElement.innerHTML = this.contentMap.get(url);
             console.log('From cache',this.contentMap)
+            resolve()
           } else {
             const response = await fetch(url);
             const text = await response.text();
@@ -91,10 +92,12 @@
             console.log('After',this.contentMap)
             // Save contentMap to localStorage
             localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+            resolve()
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
         } catch (error) {
           console.error(error);
+          reject(error)
         }
       })
     }
