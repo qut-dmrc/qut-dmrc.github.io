@@ -18,6 +18,15 @@
     ]*/);
     routes = [];
 
+    constructor() {
+      super();
+      // Load contentMap from localStorage on initialization
+      const savedContentMap = localStorage.getItem('contentMap');
+      if (savedContentMap) {
+        this.contentMap = new Map(JSON.parse(savedContentMap));
+      }
+    }
+
     connectedCallback() {
       addEventListener("popstate", this);
       this.contentElement = document.querySelector(
@@ -25,12 +34,14 @@
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
     }
+
     handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
         if (contentUrl) this.viewTransition(contentUrl);
       }
     }
+
     contentUrlFromLocation(url) {
       const matchedRoute = this.routes.find(
         ({ href }) => url == new URL(href, document.baseURI),
@@ -38,6 +49,7 @@
       if (matchedRoute)
         return new URL(matchedRoute.content, document.baseURI).toString();
     }
+
     /**
      * Handle anchor click event.
      */
@@ -50,14 +62,16 @@
       history.pushState({}, "", href);
       this.viewTransition(contentUrl);
     }
+
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
       });
     }
+
     async updateContent(url) {
-      console.log('Before',this.contentMap)
+      console.log('Before', this.contentMap);
       const { contentElement } = this;
       if (!contentElement) return;
       try {
@@ -68,8 +82,10 @@
           const text = await response.text();
           this.contentMap.set(url, text);
           contentElement.innerHTML = text;
-
+          
           console.log('After',this.contentMap)
+          // Save contentMap to localStorage
+          localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
         for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
       } catch (error) {
@@ -119,7 +135,6 @@
       }
       this.router.routes.push({ href, content });
 
-      // console.log('Initial',this.router.contentMap)
       if (new URL(href, document.baseURI).toString() == location.toString())
         this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
@@ -148,9 +163,11 @@
       }
       this.anchor?.addEventListener("click", this);
     }
+
     get anchor() {
       return this.querySelector("a");
     }
+
     handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
         this.router?.navigate(event);
@@ -175,16 +192,20 @@
       this.setAriaCurrent();
       this.router?.navlinks.add(this);
     }
+
     disconnectedCallback() {
       this.router?.navlinks.delete(this);
     }
+
     get anchor() {
       return this.querySelector("a");
     }
+
     handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
         this.router?.navigate(event);
     }
+
     setAriaCurrent() {
       const { anchor } = this;
       if (!anchor) return;
