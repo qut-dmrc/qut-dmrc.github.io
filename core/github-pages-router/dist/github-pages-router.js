@@ -65,23 +65,26 @@
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
+      await this.updateContent(contentUrl,false);
+
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
       });
     }
 
-    async updateContent(url) {
+    async updateContent(url,trig = true) {
       console.log('Before', this.contentMap);
       const { contentElement } = this;
       if (!contentElement) return;
       try {
         if (this.contentMap.has(url)) {
           contentElement.innerHTML = this.contentMap.get(url);
+          console.log('From cache',this.contentMap)
         } else {
           const response = await fetch(url);
           const text = await response.text();
           this.contentMap.set(url, text);
-          contentElement.innerHTML = text;
+          if(trig) contentElement.innerHTML = text;
 
           console.log('After',this.contentMap)
           // Save contentMap to localStorage
