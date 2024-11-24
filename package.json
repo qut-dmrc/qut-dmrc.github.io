@@ -5,6 +5,7 @@
     "github-pages-router": "^1.0.1"
   },
   "scripts": {
-    "build": "cd ./util && npm run build"
+    "build": "cd ./util && npm run build",
+    "mirror": "cd ./util && npm run mirror"
   }
 }
