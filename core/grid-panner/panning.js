@@ -77,7 +77,7 @@ function handleMouseMove(event) {
   const offsetY = (centerY - event.clientY) * 0.15; // Adjust the multiplier to control the shadow intensity
 
   // Apply the box-shadow to the grid container
-  gridContainer.querySelector('.grid-container').style.boxShadow = `${-offsetY}px ${offsetX}px ${24+Math.abs(offsetX)+Math.abs(offsetY)}px var(--shadow)`;
+  gridContainer.querySelector('.grid-container').style.boxShadow = `${-offsetY}px ${offsetX}px ${12+Math.abs(offsetX)+Math.abs(offsetY)}px var(--shadow)`;
 
   // Start the panning update loop
   updatePanning();
