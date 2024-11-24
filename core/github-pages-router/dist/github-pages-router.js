@@ -36,8 +36,8 @@
       
       // This + console.logging in the callback seems to hackey render block
       // -> not always
-      this.textContent.innerHTML = 'Flash of content';
-      
+      this.contentElement.innerHTML = 'Flash of content';
+
       document.startViewTransition(() => { 
         this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
       })
