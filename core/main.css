@@ -18,7 +18,7 @@ body {
 
 .panner {
   width:100dvw;
-  height: 90dvh;
+  height: 100dvh;
   margin: auto;
   position: relative;
 }
@@ -70,4 +70,10 @@ body {
 
 .last-item {
   height:11rem;
+}
+
+main {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
 }

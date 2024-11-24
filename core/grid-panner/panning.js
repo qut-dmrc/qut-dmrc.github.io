@@ -10,7 +10,7 @@ const containerHeight = containerRect.height;
 
 // Define the edge distances as percentages of the viewport width and height
 const horizontalEdgeDistancePercentage = 50; // 5% of the viewport width
-const verticalEdgeDistancePercentage = 40; // 10% of the viewport height
+const verticalEdgeDistancePercentage = 50; // 10% of the viewport height
 
 // Calculate the actual edge distances in pixels
 const horizontalEdgeDistance = (horizontalEdgeDistancePercentage / 100) * window.innerWidth;
@@ -19,16 +19,14 @@ const verticalEdgeDistance = (verticalEdgeDistancePercentage / 100) * window.inn
 // Define the speed factor (you can adjust this)
 const speedFactor = 0.75;
 
-// Easing function for smooth transition
-function easeInOutQuad(t) {
-  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-}
+// Define the time factor to control the interpolation speed
+const timeFactor = 0.005; // Adjust this value to control the interpolation speed (lower value = slower)
 
 // Function to update the panning
 function updatePanning() {
   // Interpolate the current panning position towards the target position
-  xPanCurrent += (xPanTarget - xPanCurrent) * 0.1;
-  yPanCurrent += (yPanTarget - yPanCurrent) * 0.1;
+  xPanCurrent += (xPanTarget - xPanCurrent) * timeFactor;
+  yPanCurrent += (yPanTarget - yPanCurrent) * timeFactor;
 
   // Apply the transformation to the grid container
   gridContainer.style.transform = `translate(${xPanCurrent}px, ${yPanCurrent}px)`;
