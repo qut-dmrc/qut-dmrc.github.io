@@ -89,7 +89,7 @@
             //const text = await response.text();
             //this.contentMap.set(url, text);
 
-            await fetch(url).then(d => d.text().then(text=> { this.contentElement = text; this.contentMap.set(url, text); 
+            await fetch(url).then(d => d.text().then(text=> { contentElement = text; this.contentMap.set(url, text); 
               localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries()))); resolve()}))
             
             // resolve()
