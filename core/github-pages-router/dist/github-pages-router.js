@@ -87,8 +87,8 @@
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
       if(this.contentElement.children.length == 0 && window.ghpContext == '404') {
-        console.log("Prefilling");
-        this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+        console.log("Prefill stage");
+        // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
       }
 
       const transition = document.startViewTransition(async () => {
