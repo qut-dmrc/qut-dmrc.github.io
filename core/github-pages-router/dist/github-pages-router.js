@@ -68,7 +68,7 @@
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
       document.startViewTransition(async () => {
-        let text = await this.updateContent(contentUrl);
+        await this.updateContent(contentUrl);
       });
     }
     
@@ -77,7 +77,7 @@
       //const { contentElement } = this;
       //if (!contentElement) return;
       
-      this.contentElement.innerHTML = document.location.href;
+      this.contentElement.innerHTML = await (await fetch(url)).text();
       /*return new Promise(async (resolve, reject) => {
         try {
           if (this.contentMap.has(url)) {
