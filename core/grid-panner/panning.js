@@ -74,18 +74,18 @@ function handleMouseMove(event) {
   updatePanning();
 }
 
-// Function to detect if the device is a mobile device
+// Function to detect if the device is in a mobile-like viewport
 function isMobileDevice() {
-  return /Mobi|Android/i.test(navigator.userAgent);
+  return window.matchMedia("(max-width: 768px)").matches;
 }
 
 // Add or remove the event listener based on the device type
 function setupEventListeners() {
   if (isMobileDevice()) {
-    console.log('Mobile device detected. Removing mousemove event listener.');
+    console.log('Mobile-like viewport detected. Removing mousemove event listener.');
     document.removeEventListener('mousemove', handleMouseMove);
   } else {
-    console.log('Desktop device detected. Adding mousemove event listener.');
+    console.log('Desktop-like viewport detected. Adding mousemove event listener.');
     document.addEventListener('mousemove', handleMouseMove);
   }
 }
@@ -96,5 +96,9 @@ applyPanningState();
 // Initial setup of event listeners
 setupEventListeners();
 
-// Optional: Re-evaluate the device type on window resize (in case the user switches between mobile/desktop modes)
+// Listen for changes in the viewport size
+const mediaQueryList = window.matchMedia("(max-width: 768px)");
+mediaQueryList.addListener(setupEventListeners);
+
+// Optional: Re-evaluate the device type on window resize (in case the user resizes the browser window)
 window.addEventListener('resize', setupEventListeners);
