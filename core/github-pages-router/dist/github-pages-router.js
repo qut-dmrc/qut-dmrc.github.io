@@ -4,13 +4,12 @@
       customElements.define(elementName, ElementClass);
   }
 
-
   window.addEventListener('pageswap', (event) => { 
-    console.log(document.querySelector('main').innerHTML)
+    localStorage.setItem('lastContent', document.querySelector('main').innerHTML);
   })
 
   window.addEventListener('pagereveal', (event) => { 
-    console.log(document.querySelector('main').innerHTML)
+    console.log(localStorage.getItem('lastContent'))
   })
   /**
    * Web component <ghp-router>. All other ghp-* components must be inside a <ghp-router>.
