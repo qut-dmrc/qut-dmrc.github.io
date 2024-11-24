@@ -77,22 +77,23 @@
     /**
      * Handle anchor click event.
      */
-    navigate(event) {
+    async navigate(event) {
       event.preventDefault();
       const { href } = event.target;
       if (href == document.location.toString()) return;
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) { console.log('no content'); return }
       history.pushState({}, "", href);
-      this.viewTransition(contentUrl);
+      await this.viewTransition(contentUrl);
     }
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
-      document.startViewTransition(async () => {
+      const transition = document.startViewTransition(async () => {
         await this.updateContent(contentUrl)
       });
+      await transition.finished;
     }
     
     async updateContent(url,keep,drop) {
