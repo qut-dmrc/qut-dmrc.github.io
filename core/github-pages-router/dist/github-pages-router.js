@@ -52,6 +52,7 @@
       });
     }
     async updateContent(url) {
+      console.log('Before',this.contentMap)
       const { contentElement } = this;
       if (!contentElement) return;
       try {
@@ -62,6 +63,8 @@
           const text = await response.text();
           this.contentMap.set(url, text);
           contentElement.innerHTML = text;
+
+          console.log('After',this.contentMap)
         }
         for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
       } catch (error) {
@@ -110,6 +113,8 @@
         return;
       }
       this.router.routes.push({ href, content });
+
+      console.log('Initial',this.router.contentMap)
       if (new URL(href, document.baseURI).toString() == location.toString())
         this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
