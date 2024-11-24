@@ -33,6 +33,13 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
+      if( this.contentElement.innerHTML.length == 0) {
+        this.contentElement.innerHTML = [...this.contentMap.values()].at(-2) ?? ''
+        document.startViewTransition(() => {
+          this.contentElement.innerHTML = [...this.contentMap.values()].at(-1)
+        });
+
+      }
       // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
     }
 
