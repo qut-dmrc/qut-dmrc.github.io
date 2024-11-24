@@ -2,10 +2,17 @@
   navigation: auto;
 }
 
+* {
+  
+  box-sizing: border-box;
+}
+
 body {
   --background: #16161b;
   --foreground: white;
-  overflow: hidden;
+  //overflow: hidden;
+
+  box-sizing: border-box;
 
 }
 
@@ -22,8 +29,10 @@ body {
   width:100dvw;
   height: 100dvh;
 
-  margin-inline: 50% 50%;
-  /*position: absolute;*/
+  margin-inline: auto;
+  //position: absolute;
+
+  transform-origin: 50% 50%;
  
 }
 
@@ -31,12 +40,14 @@ body {
   column-count: 2;
   column-gap: 0%;
   column-width: 100%;
-  width: 100%;
   max-width: 640px;
   background-color: white;
   transform: rotate(-35deg) skew(22deg);
-  transform-origin: 78% 20%;
+  transform-origin: 78% 50%;
+
+  box-sizing: border-box;
 }
+
 
 .grid-item {
   background-color: var(--background);
@@ -76,11 +87,49 @@ body {
   height:11rem;
 }
 
-main {
-  height: 100%;
+ghp-router {
+  position: fixed;
+  display: block;
+  left:0;
+  top:0;
+  right:0;
+  bottom: 0;
+  height:100%;
   width: 100%;
-  float:left;
-  position: absolute;
-  left:10px;
-  top:10px;
+
+  box-sizing: border-box;
+}
+
+main {
+  position: fixed;
+  left:2rem;
+  bottom:2rem;
+}
+
+
+@media (pointer:none), (pointer:coarse) {
+
+  .panner {
+    all:unset;
+  }
+
+  .grid-container {
+    column-count: 1;
+   transform: revert;
+   transform-origin: revert;
+  }
+
+  ghp-router {
+    all:unset;
+    position: relative;
+  }
+
+  main {
+    background-color: var(--background);
+    border-top: 1px solid white;
+    width:100dvw;
+    left:0;
+    padding-left: 2rem;
+   
+  }
 }

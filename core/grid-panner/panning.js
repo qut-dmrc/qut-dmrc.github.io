@@ -83,6 +83,8 @@ function isMobileDevice() {
 function setupEventListeners() {
   if (isMobileDevice()) {
     console.log('Mobile-like viewport detected. Removing mousemove event listener.');
+
+    gridContainer.style.transform = null;
     document.removeEventListener('mousemove', handleMouseMove);
   } else {
     console.log('Desktop-like viewport detected. Adding mousemove event listener.');
