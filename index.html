@@ -7,10 +7,10 @@
   <title>DMRC - Research code repository</title>
   <link rel="stylesheet" href="./core/main.css" />
 
-  <!--<link rel="expect" blocking="render" href="#base">
+  <link rel="expect" blocking="render" href="#base">
   <link rel="expect" blocking="render" href="#page1">
   <link rel="expect" blocking="render" href="#page2">
-  <link rel="expect" blocking="render" href="#page3">-->
+  <link rel="expect" blocking="render" href="#page3">
 </head>
 
 <body>
@@ -84,7 +84,7 @@
 
   </ghp-router>
 
-  <script>console.log('On index.html')</script>
+  <script>console.log('On index.html'); window.ghpContext = 'index';</script>
   <script src="./core/grid-panner/panning.js"></script>
   <script src="./core/github-pages-router/dist/github-pages-router.js"></script>
 
