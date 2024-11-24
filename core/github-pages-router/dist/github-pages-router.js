@@ -4,7 +4,8 @@
       customElements.define(elementName, ElementClass);
   }
 
-  window.addEventListener('pageswap', (event) => { 
+  // how to signal to 404 page what to swap between?
+  /*window.addEventListener('pageswap', (event) => { 
     localStorage.setItem('lastContent', document.querySelector('main').innerHTML);
   })
 
@@ -12,7 +13,8 @@
     let last = localStorage.getItem('lastContent')
     document.querySelector('main').innerHTML = last;
     console.log(last)
-  })
+  })*/
+
   /**
    * Web component <ghp-router>. All other ghp-* components must be inside a <ghp-router>.
    */
@@ -50,9 +52,9 @@
 
       // This + console.logging in the callback seems to hackey render block
       // -> not always
-      this.contentElement.innerHTML = 'Flash of content';
+      // this.contentElement.innerHTML = 'Flash of content';
 
-      // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
 
     }
 
