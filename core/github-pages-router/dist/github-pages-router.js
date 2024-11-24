@@ -65,16 +65,17 @@
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
-      
+      //this.updateContent(contentUrl,false);
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
+        //contentElement.innerHTML = document.location.href;
       });
     }
 
     async updateContent(url,trig = true) {
       
       const { contentElement } = this;
-      if (!contentElement) return;
+      //if (!contentElement) return;
       try {
         if (this.contentMap.has(url)) {
           contentElement.innerHTML = document.location.href; //this.contentMap.get(url);
@@ -85,7 +86,7 @@
           this.contentMap.set(url, text);
           if(trig) contentElement.innerHTML = document.location.href;
 
-          console.log('After',this.contentMap)
+          console.log('Updated',this.contentMap)
           // Save contentMap to localStorage
           localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
