@@ -45,6 +45,10 @@
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }
+
+     window.addEventListener('pagereveal', (event) => { 
+       this.contentElement.innerHTML  = localStorage.getItem('lastContent')
+     })
       
       // This + console.logging in the callback seems to hackey render block
       // -> not always
