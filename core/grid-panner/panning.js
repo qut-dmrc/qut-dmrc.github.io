@@ -22,6 +22,7 @@ const speedFactor = 0.75;
 // Define the time factor to control the interpolation speed
 const timeFactor = 0.005; // Adjust this value to control the interpolation speed (lower value = slower)
 
+
 // Function to update the panning
 function updatePanning() {
   // Interpolate the current panning position towards the target position
@@ -31,9 +32,23 @@ function updatePanning() {
   // Apply the transformation to the grid container
   gridContainer.style.transform = `translate(${xPanCurrent}px, ${yPanCurrent}px)`;
 
+  // Store the panning state in localStorage
+  localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+
   // Continue animating until the target position is reached
   if (Math.abs(xPanTarget - xPanCurrent) > 0.1 || Math.abs(yPanTarget - yPanCurrent) > 0.1) {
     requestAnimationFrame(updatePanning);
+  }
+}
+
+// Retrieve the panning state from localStorage and apply it
+function applyPanningState() {
+  const storedState = localStorage.getItem('panningState');
+  if (storedState) {
+    const { x, y } = JSON.parse(storedState);
+    xPanCurrent = x;
+    yPanCurrent = y;
+    gridContainer.style.transform = `translate(${x}px, ${y}px)`;
   }
 }
 
@@ -58,3 +73,6 @@ document.addEventListener('mousemove', function(event) {
   // Start the panning update loop
   updatePanning();
 });
+
+// Apply the panning state when the page loads
+applyPanningState();
