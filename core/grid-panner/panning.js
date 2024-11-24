@@ -17,7 +17,7 @@ const horizontalEdgeDistance = (horizontalEdgeDistancePercentage / 100) * window
 const verticalEdgeDistance = (verticalEdgeDistancePercentage / 100) * window.innerHeight;
 
 // Define the speed factor (you can adjust this)
-const speedFactor = 0.75;
+const speedFactor = 0.5;
 
 // Define the time factor to control the interpolation speed
 const timeFactor = 0.005; // Adjust this value to control the interpolation speed (lower value = slower)
