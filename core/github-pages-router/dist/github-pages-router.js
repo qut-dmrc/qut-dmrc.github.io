@@ -68,38 +68,36 @@
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
       document.startViewTransition(async () => {
-        await this.updateContent(contentUrl);
+        return new Promise((keep,drop)=> this.updateContent(contentUrl,keep,drop));
       });
     }
     
-    async updateContent(url) {
+    async updateContent(url,keep,drop) {
       
       const { contentElement } = this;
       if (!contentElement) return;
       
       //this.contentElement.innerHTML = await (await fetch(url)).text();
-      return new Promise(async (resolve, reject) => {
         try {
           if (this.contentMap.has(url)) {
-            this.contentElement.innerHTML = this.contentMap.get(url);
+            contentElement.innerHTML = this.contentMap.get(url);
             console.log('From cache',this.contentMap)
-            resolve(this.contentMap.get(url))
+            keep()
           } else {
-            //const response = await fetch(url);
-            //const text = await response.text();
-            //this.contentMap.set(url, text);
-
-            await fetch(url).then(d => d.text().then(text=> { contentElement = text; this.contentMap.set(url, text); 
-              localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries()))); resolve()}))
-            
-            // resolve()
+            const response = await fetch(url);
+            const text = await response.text();
+            this.contentMap.set(url, text);
+            contentElement.innerHTML = text;
+              
+            localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+            keep()
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
         } catch (error) {
           console.error(error);
-          reject(error)
+          drop(error)
         }
-      })
+  
     }
   }
 
