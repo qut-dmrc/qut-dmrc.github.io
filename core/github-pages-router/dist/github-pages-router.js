@@ -101,7 +101,7 @@
       if (!contentElement) return;
       
       //this.contentElement.innerHTML = await (await fetch(url)).text();
-        try {
+        //try {
           if (this.contentMap.has(url)) {
             console.log("setting from cache")
             contentElement.innerHTML = this.contentMap.get(url);
@@ -117,10 +117,10 @@
             
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-        } catch (error) {
-          console.error(error);
+        //} catch (error) {
+          //console.error(error);
        
-        }
+        //}
   
     }
   }
