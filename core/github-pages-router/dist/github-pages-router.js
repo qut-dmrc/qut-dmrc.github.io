@@ -110,8 +110,8 @@
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
-            console.log("setting from fetch")
             contentElement.innerHTML = text;
+            console.log("setting from fetch");
               
             localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
             
