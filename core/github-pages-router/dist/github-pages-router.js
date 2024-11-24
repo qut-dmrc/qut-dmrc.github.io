@@ -33,7 +33,7 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
-     this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
     }
 
     handleEvent(event) {
@@ -68,8 +68,8 @@
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
       document.startViewTransition(async () => {
-        let text = await this.updateContent(contentUrl);
-        this.contentElement.innerHTML = text;
+        // let text = await this.updateContent(contentUrl);
+        this.contentElement.innerHTML = document.location.href;
       });
     }
 
