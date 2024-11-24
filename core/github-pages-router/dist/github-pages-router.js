@@ -49,6 +49,7 @@
 
     handleEvent(event) {
       if (event.type == "popstate") {
+        console.log('popped');
         const contentUrl = this.contentUrlFromLocation(location.toString());
         if (contentUrl) this.viewTransition(contentUrl);
       }
@@ -79,7 +80,7 @@
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
       document.startViewTransition(async () => {
-        return new Promise((keep,drop)=> this.updateContent(contentUrl,keep,drop));
+        await this.updateContent(contentUrl)
       });
     }
     
@@ -92,22 +93,20 @@
         try {
           if (this.contentMap.has(url)) {
             contentElement.innerHTML = this.contentMap.get(url);
-            console.log('From cache',this.contentMap)
-            keep()
+              
           } else {
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
             contentElement.innerHTML = text;
-            console.log('Retrieved',text,'before load')
               
             localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
-            keep()
+            
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
         } catch (error) {
           console.error(error);
-          drop(error)
+       
         }
   
     }
