@@ -9,6 +9,7 @@
 
 body {
   --background: #16161b;
+  --shadow: #1e1e20;
   --foreground: white;
   /*overflow: hidden*/;
 
@@ -29,7 +30,8 @@ body {
   width:100dvw;
   height: 100dvh;
 
-  margin-inline: auto;
+  margin-inline: 10% 90%;
+  margin-block: 10%;
   /*position: absolute;*/
 
   transform-origin: 50% 50%;
@@ -51,7 +53,9 @@ body {
   background-color: white;
 
   transform: rotate(-35deg) skew(22deg);
-  transform-origin: 78% 50%;
+  transform-origin: 78% 50;
+
+  box-shadow: -20px 20px 60px var(--shadow);
   
 }
 
