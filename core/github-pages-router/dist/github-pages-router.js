@@ -77,18 +77,18 @@
       //const { contentElement } = this;
       //if (!contentElement) return;
       
-      this.contentElement.innerHTML = await (await fetch(url)).text();
-      /*return new Promise(async (resolve, reject) => {
+      //this.contentElement.innerHTML = await (await fetch(url)).text();
+      return new Promise(async (resolve, reject) => {
         try {
           if (this.contentMap.has(url)) {
-            //contentElement.innerHTML = this.contentMap.get(url);
+            this.contentElement.innerHTML = this.contentMap.get(url);
             console.log('From cache',this.contentMap)
             resolve(this.contentMap.get(url))
           } else {
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
-            //contentElement.innerHTML = text;
+            this.contentElement.innerHTML = text;
   
             console.log('After',this.contentMap)
             // Save contentMap to localStorage
@@ -100,7 +100,7 @@
           console.error(error);
           reject(error)
         }
-      })*/
+      })
     }
   }
 
