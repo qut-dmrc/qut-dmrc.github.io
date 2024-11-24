@@ -33,7 +33,7 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
-     this.contentElement.innerHTML = 'Flash of content' 
+     this.contentElement.innerHTML = [...this.contentMap.values()].at(-1)
     }
 
     handleEvent(event) {
