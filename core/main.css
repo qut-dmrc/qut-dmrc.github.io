@@ -3,7 +3,6 @@
 }
 
 * {
-  
   box-sizing: border-box;
 }
 
@@ -23,7 +22,7 @@ body {
   color: var(--foreground);
   padding: 20px;
   background-color: var(--background);
-  
+
 }
 
 .panner {

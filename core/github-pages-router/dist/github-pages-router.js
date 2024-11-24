@@ -10,12 +10,12 @@
   class GHPRouter extends HTMLElement {
     contentElement = undefined;
     navlinks = new Set();
-    contentMap = new Map([
+    contentMap = new Map(/*[
       ['https://qut-dmrc.github.io/post/base.html','<h1>Page 0</h1>\n<p>Content A</p>'],
       ['https://qut-dmrc.github.io/post/page1.html','<h1>Page 1</h1>\n<p>Content B</p>'],
       ['https://qut-dmrc.github.io/post/page2.html','<h1>Page 2</h1>\n<p>Content C</p>'],
       ['https://qut-dmrc.github.io/post/page3.html','<h1>Page 3</h1>\n<p>Content D</p>']   
-    ]);
+    ]*/);
     routes = [];
 
     connectedCallback() {
