@@ -68,17 +68,17 @@
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
       document.startViewTransition(async () => {
-        // let text = await this.updateContent(contentUrl);
-        this.contentElement.innerHTML = document.location.href;
+        let text = await this.updateContent(contentUrl);
       });
     }
-
+    
     async updateContent(url) {
       
-      const { contentElement } = this;
-      if (!contentElement) return;
+      //const { contentElement } = this;
+      //if (!contentElement) return;
       
-      return new Promise(async (resolve, reject) => {
+      this.contentElement.innerHTML = document.location.href;
+      /*return new Promise(async (resolve, reject) => {
         try {
           if (this.contentMap.has(url)) {
             //contentElement.innerHTML = this.contentMap.get(url);
@@ -100,7 +100,7 @@
           console.error(error);
           reject(error)
         }
-      })
+      })*/
     }
   }
 
