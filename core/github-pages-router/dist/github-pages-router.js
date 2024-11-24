@@ -65,36 +65,38 @@
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
-      //this.updateContent(contentUrl,false);
+      
+
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
-        //contentElement.innerHTML = document.location.href;
       });
     }
 
     async updateContent(url,trig = true) {
       
       const { contentElement } = this;
-      //if (!contentElement) return;
-      console.log(this)
-      try {
-        if (this.contentMap.has(url)) {
-          contentElement.innerHTML = document.location.href; //this.contentMap.get(url);
-          console.log('From cache',this.contentMap)
-        } else {
-          const response = await fetch(url);
-          const text = await response.text();
-          this.contentMap.set(url, text);
-          if(trig) contentElement.innerHTML = document.location.href;
-
-          console.log('Updated',this.contentMap)
-          // Save contentMap to localStorage
-          localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+      if (!contentElement) return;
+      
+      return new Promise(async (resolve, reject) => {
+        try {
+          if (this.contentMap.has(url)) {
+            contentElement.innerHTML = this.contentMap.get(url);
+            console.log('From cache',this.contentMap)
+          } else {
+            const response = await fetch(url);
+            const text = await response.text();
+            this.contentMap.set(url, text);
+            if(trig) contentElement.innerHTML = text;
+  
+            console.log('After',this.contentMap)
+            // Save contentMap to localStorage
+            localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+          }
+          for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
+        } catch (error) {
+          console.error(error);
         }
-        for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-      } catch (error) {
-        console.error(error);
-      }
+      })
     }
   }
 
