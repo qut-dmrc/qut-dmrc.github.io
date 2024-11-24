@@ -58,7 +58,7 @@
       const { href } = event.target;
       if (href == document.location.toString()) return;
       const contentUrl = this.contentUrlFromLocation(href);
-      if (!contentUrl) return;
+      if (!contentUrl) { console.log('no content'); return }
       history.pushState({}, "", href);
       this.viewTransition(contentUrl);
     }
@@ -82,7 +82,7 @@
           const text = await response.text();
           this.contentMap.set(url, text);
           contentElement.innerHTML = text;
-          
+
           console.log('After',this.contentMap)
           // Save contentMap to localStorage
           localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
