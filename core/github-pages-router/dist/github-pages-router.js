@@ -86,6 +86,8 @@
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
+      if(this.contentElement.innerHTML.length == 0)  contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      
       const transition = document.startViewTransition(async () => {
         await this.updateContent(contentUrl)
       });
@@ -104,7 +106,6 @@
             contentElement.innerHTML = this.contentMap.get(url);
               
           } else {
-            contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
