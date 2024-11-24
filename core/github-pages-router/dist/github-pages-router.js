@@ -4,6 +4,17 @@
       customElements.define(elementName, ElementClass);
   }
 
+  // how to signal to 404 page what to swap between?
+  /*window.addEventListener('pageswap', (event) => { 
+    localStorage.setItem('lastContent', document.querySelector('main').innerHTML);
+  })
+
+  window.addEventListener('pagereveal', (event) => { 
+    let last = localStorage.getItem('lastContent')
+    document.querySelector('main').innerHTML = last;
+    console.log(last)
+  })*/
+
   /**
    * Web component <ghp-router>. All other ghp-* components must be inside a <ghp-router>.
    */
@@ -25,6 +36,7 @@
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }
+
     }
 
     connectedCallback() {
@@ -33,12 +45,20 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
+
+      // This + console.logging in the callback seems to hackey render block
+      // -> not always
+      // this.contentElement.innerHTML = 'Flash of content';
+
+      // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "popstate") {
+        console.log('popped');
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        if (contentUrl) this.viewTransition(contentUrl);
+        if (contentUrl) await this.viewTransition(contentUrl);
       }
     }
 
@@ -53,47 +73,56 @@
     /**
      * Handle anchor click event.
      */
-    navigate(event) {
+    async navigate(event) {
       event.preventDefault();
       const { href } = event.target;
       if (href == document.location.toString()) return;
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) { console.log('no content'); return }
       history.pushState({}, "", href);
-      this.viewTransition(contentUrl);
+      await this.viewTransition(contentUrl);
     }
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
-      //this.updateContent(contentUrl,false);
-      document.startViewTransition(async () => {
-        await this.updateContent(contentUrl);
-        //contentElement.innerHTML = document.location.href;
-      });
-    }
+      
+      if(this.contentElement.children.length == 0 && window.ghpContext == '404') {
+        console.log("Prefill stage");
+        // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      }
 
-    async updateContent(url,trig = true) {
+      const transition = document.startViewTransition(async () => {
+        await this.updateContent(contentUrl)
+      });
+      await transition.finished;
+    }
+    
+    async updateContent(url) {
       
       const { contentElement } = this;
-      //if (!contentElement) return;
-      try {
-        if (this.contentMap.has(url)) {
-          contentElement.innerHTML = document.location.href; //this.contentMap.get(url);
-          console.log('From cache',this.contentMap)
-        } else {
-          const response = await fetch(url);
-          const text = await response.text();
-          this.contentMap.set(url, text);
-          if(trig) contentElement.innerHTML = document.location.href;
-
-          console.log('Updated',this.contentMap)
-          // Save contentMap to localStorage
-          localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+      if (!contentElement) return;
+      
+      //this.contentElement.innerHTML = await (await fetch(url)).text();
+        try {
+          if (this.contentMap.has(url)) {
+            console.log("setting from cache")
+            contentElement.innerHTML = this.contentMap.get(url);
+              
+          } else {
+            const response = await fetch(url);
+            const text = await response.text();
+            this.contentMap.set(url, text);
+            contentElement.innerHTML = text;
+            console.log("setting from fetch");
+              
+            localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+            
+          }
+          for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
+        } catch (error) {
+          console.error(error);
         }
-        for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-      } catch (error) {
-        console.error(error);
-      }
+  
     }
   }
 
@@ -123,7 +152,7 @@
   class GHPRoute extends HTMLElement {
     router = undefined;
 
-    connectedCallback() {
+    async connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
@@ -139,7 +168,7 @@
       this.router.routes.push({ href, content });
 
       if (new URL(href, document.baseURI).toString() == location.toString())
-        this.router.viewTransition(
+        await this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );
     }
@@ -171,9 +200,9 @@
       return this.querySelector("a");
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
   }
 
@@ -204,9 +233,9 @@
       return this.querySelector("a");
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
 
     setAriaCurrent() {
