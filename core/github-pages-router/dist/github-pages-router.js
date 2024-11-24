@@ -66,7 +66,6 @@
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       
-
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
       });
@@ -87,7 +86,7 @@
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
-            if(trig) contentElement.innerHTML = text;
+            contentElement.innerHTML = text;
   
             console.log('After',this.contentMap)
             // Save contentMap to localStorage
