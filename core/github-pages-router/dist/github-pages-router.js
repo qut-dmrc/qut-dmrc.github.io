@@ -4,6 +4,14 @@
       customElements.define(elementName, ElementClass);
   }
 
+
+  window.addEventListener('pageswap', (event) => { 
+    console.log(document.querySelector('main').innerHTML)
+  })
+
+  window.addEventListener('pagereveal', (event) => { 
+    console.log(document.querySelector('main').innerHTML)
+  })
   /**
    * Web component <ghp-router>. All other ghp-* components must be inside a <ghp-router>.
    */
@@ -41,7 +49,7 @@
       
       // This + console.logging in the callback seems to hackey render block
       // -> not always
-      //this.contentElement.innerHTML = 'Flash of content';
+      // this.contentElement.innerHTML = 'Flash of content';
 
       // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
 
