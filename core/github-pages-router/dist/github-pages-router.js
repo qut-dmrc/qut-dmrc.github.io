@@ -18,14 +18,14 @@
     ]*/);
     routes = [];
 
-    constructor() {
+    /*constructor() {
       super();
       // Load contentMap from localStorage on initialization
       const savedContentMap = localStorage.getItem('contentMap');
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }
-    }
+    }*/
 
     connectedCallback() {
       addEventListener("popstate", this);
@@ -33,12 +33,17 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
+
+      const savedContentMap = localStorage.getItem('contentMap');
+      if (savedContentMap) {
+        this.contentMap = new Map(JSON.parse(savedContentMap));
+      }
       
       // This + console.logging in the callback seems to hackey render block
       // -> not always
-      this.contentElement.innerHTML = 'Flash of content';
+      //this.contentElement.innerHTML = 'Flash of content';
 
-      document.startViewTransition(() => { 
+      document.startViewTransition(async () => { 
         this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
       })
 
