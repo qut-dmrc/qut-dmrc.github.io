@@ -65,9 +65,10 @@
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
-      
+      this.updateContent(contentUrl,false);
       document.startViewTransition(async () => {
-        await this.updateContent(contentUrl);
+        //await this.updateContent(contentUrl);
+        contentElement.innerHTML = document.location.href;
       });
     }
 
