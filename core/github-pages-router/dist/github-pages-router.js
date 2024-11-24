@@ -69,13 +69,6 @@
       
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
-
-        let text = this.contentElement.innerHTML;
-        this.contentMap.set(url, text);
-
-        console.log('After',this.contentMap)
-        // Save contentMap to localStorage
-        localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
       });
     }
     
@@ -95,9 +88,10 @@
             //const response = await fetch(url);
             //const text = await response.text();
             //this.contentMap.set(url, text);
-            this.contentElement.innerHTML = await (await fetch(url)).text();;
-  
-            resolve()
+            await fetch(url).then(d => d.text().then(text=> { this.contentElement = d; this.contentMap.set(url, text); 
+              localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries()))); resolve()}))
+            
+            // resolve()
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
         } catch (error) {
