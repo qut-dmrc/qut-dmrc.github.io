@@ -69,13 +69,20 @@
       
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
+
+        let text = this.contentElement.innerHTML;
+        this.contentMap.set(url, text);
+
+        console.log('After',this.contentMap)
+        // Save contentMap to localStorage
+        localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
       });
     }
     
     async updateContent(url) {
       
-      //const { contentElement } = this;
-      //if (!contentElement) return;
+      const { contentElement } = this;
+      if (!contentElement) return;
       
       //this.contentElement.innerHTML = await (await fetch(url)).text();
       return new Promise(async (resolve, reject) => {
@@ -85,15 +92,12 @@
             console.log('From cache',this.contentMap)
             resolve(this.contentMap.get(url))
           } else {
-            const response = await fetch(url);
-            const text = await response.text();
-            this.contentMap.set(url, text);
-            this.contentElement.innerHTML = text;
+            //const response = await fetch(url);
+            //const text = await response.text();
+            //this.contentMap.set(url, text);
+            this.contentElement.innerHTML = await (await fetch(url)).text();;
   
-            console.log('After',this.contentMap)
-            // Save contentMap to localStorage
-            localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
-            resolve(text)
+            resolve()
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
         } catch (error) {
