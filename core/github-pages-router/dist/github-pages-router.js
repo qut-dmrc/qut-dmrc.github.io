@@ -103,12 +103,14 @@
       //this.contentElement.innerHTML = await (await fetch(url)).text();
         try {
           if (this.contentMap.has(url)) {
+            console.log("setting from cache")
             contentElement.innerHTML = this.contentMap.get(url);
               
           } else {
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
+            console.log("setting from fetch")
             contentElement.innerHTML = text;
               
             localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
