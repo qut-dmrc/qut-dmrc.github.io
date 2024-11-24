@@ -33,14 +33,8 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
-      if( this.contentElement.innerHTML.length == 0) {
-        this.contentElement.innerHTML = [...this.contentMap.values()].at(-2) ?? ''
-        document.startViewTransition(() => {
-          this.contentElement.innerHTML = [...this.contentMap.values()].at(-1)
-        });
-
-      }
-      // this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
+      
+      this.contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
     }
 
     handleEvent(event) {
@@ -95,6 +89,7 @@
             const text = await response.text();
             this.contentMap.set(url, text);
             contentElement.innerHTML = text;
+            console.log('Retrieved',text,'before load')
               
             localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
             keep()
