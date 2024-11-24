@@ -5,7 +5,7 @@
   }
 
   // how to signal to 404 page what to swap between?
-  window.addEventListener('pageswap', (event) => { 
+  /*window.addEventListener('pageswap', (event) => { 
     localStorage.setItem('lastContent', document.querySelector('main').innerHTML);
   })
 
@@ -13,7 +13,7 @@
     let last = localStorage.getItem('lastContent')
     document.querySelector('main').innerHTML = last;
     console.log(last)
-  })
+  })*/
 
   /**
    * Web component <ghp-router>. All other ghp-* components must be inside a <ghp-router>.
@@ -104,6 +104,7 @@
             contentElement.innerHTML = this.contentMap.get(url);
               
           } else {
+            contentElement.innerHTML = [...this.contentMap.values()].at(-1) ?? ''
             const response = await fetch(url);
             const text = await response.text();
             this.contentMap.set(url, text);
