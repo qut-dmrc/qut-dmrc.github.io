@@ -49,6 +49,7 @@
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
       history.pushState({}, "", href);
+      console.log('href')
       this.viewTransition(contentUrl);
     }
     viewTransition(contentUrl) {
@@ -56,7 +57,7 @@
       
       const transition = document.startViewTransition(async () => {
         //await this.updateContent(contentUrl);
-        this.contentElement.innerHTML = await (await fetch(contentUrl)).text()
+        this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
     }
 
@@ -64,7 +65,7 @@
       const { contentElement } = this;
       if (!contentElement) return;
       try {
-        if (localStorage.getItem(url)) {
+        if (sessionStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);
           sessionStorage.getItem(url);
         } else {
