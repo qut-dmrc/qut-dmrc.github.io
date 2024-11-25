@@ -10,10 +10,11 @@
   // how to signal to 404 page what to swap between?
   window.addEventListener('pageswap', async (event) => { 
     
-    //sessionStorage.setItem('lastContent', main.innerHTML);
-    if(event.viewTransition) {
+    sessionStorage.setItem('lastContent', main.innerHTML);
+    /*if(event.viewTransition) {
       event.viewTransition.skipTransition();
-    }
+    }*/
+
   });
 
   window.addEventListener('pagereveal', async (event) => { 
@@ -21,9 +22,10 @@
     let next = sessionStorage.getItem('nextContent');
     console.log('Entering with',last);
     console.log('Entering with',next);*/
-    if(event.viewTransition) {
+   
+    /*if(event.viewTransition) {
       event.viewTransition.skipTransition();
-    }
+    }*/
   })
 
   class GHPRouter extends HTMLElement {
@@ -33,15 +35,18 @@
     contentMap = new Map();
     routes = [];
 
-    /*constructor() {
+    constructor() {
       super();
       // Load contentMap from localStorage on initialization
       /*const savedContentMap = localStorage.getItem('contentMap');
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
+      }*/
+      if(main.children.length == 0) {
+        main.innerHTML = 'Flash of content';// sessionStorage.getItem('lastContent')
       }
     
-    }*/
+    }
 
     connectedCallback() {
       addEventListener("popstate", this);
@@ -80,7 +85,7 @@
       if (!document.startViewTransition) return this.updateContent(contentUrl);
      
       document.startViewTransition(async () => {
-        this.updateContent(contentUrl);
+        await this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
     }
@@ -98,7 +103,6 @@
           const text = await response.text();
           //this.contentMap.set(url, text);
           sessionStorage.setItem(url,text);
-          sessionStorage.setItem('nextContent',text);
           contentElement.innerHTML = text;
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
