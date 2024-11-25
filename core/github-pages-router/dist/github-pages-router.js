@@ -12,7 +12,7 @@
     contentMap = new Map();
     routes = [];
 
-    constructor() {
+    /*constructor() {
       super();
       // Load contentMap from localStorage on initialization
       const savedContentMap = localStorage.getItem('contentMap');
@@ -20,7 +20,7 @@
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }
 
-    }
+    }*/
 
     connectedCallback() {
       addEventListener("popstate", this);
@@ -63,14 +63,16 @@
       const { contentElement } = this;
       if (!contentElement) return;
       try {
-        if (this.contentMap.has(url)) {
-          contentElement.innerHTML = this.contentMap.get(url);
+        if (localStorage.getItem(url)) {
+          contentElement.innerHTML = //this.contentMap.get(url);
+          localStorage.getItem(url);
         } else {
           const response = await fetch(url);
           const text = await response.text();
-          this.contentMap.set(url, text);
+          //this.contentMap.set(url, text);
+          localStorage.setItem(url,text);
           contentElement.innerHTML = text;
-          localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+          //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
         for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
       } catch (error) {
