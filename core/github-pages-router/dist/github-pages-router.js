@@ -74,7 +74,8 @@
       console.log('href')
       this.viewTransition(contentUrl);
     }
-    async viewTransition(contentUrl) {
+
+    /*async*/ viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
       console.log('Setting', last);
@@ -89,7 +90,7 @@
       const { contentElement } = this;
       if (!contentElement) return;
 
-      return new Promise(async(keep,drop)=> {
+      return new Promise(async (keep,drop)=> {
         try {
         if (sessionStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);

@@ -14,7 +14,7 @@ main {
   }
 }
 
-@keyframes grow-x {
+@keyframes page-enter {
   from {
     transform: translate(-16rem,0);
   }
@@ -23,7 +23,7 @@ main {
   }
 }
 
-@keyframes shrink-x {
+@keyframes page-exit {
   from {
     transform: translate(0,0);
   }
@@ -33,19 +33,19 @@ main {
 }
 
 ::view-transition-old(page-heading) {
-    animation: 0.6s 0.075s ease both shrink-x;
+  animation: 0.6s 0.075s ease both page-exit;
 }
 
 ::view-transition-new(page-heading) {  
-  animation: 0.6s 0.0s ease both grow-x;
+  animation: 0.6s 0.0s ease both page-enter;
 }
 
 ::view-transition-old(page-section) {
-  animation: 0.6s ease both shrink-x;
+  animation: 0.6s ease both page-exit;
 }
 
 ::view-transition-new(page-section) {  
-animation: 0.6s 0.075s ease both grow-x;
+  animation: 0.6s 0.075s ease both page-enter;
 }
 
 
