@@ -15,8 +15,8 @@
     if(event.viewTransition) {
       //if(main.children.length == 0 ) { 
 
-        console.log('skipped pageswap')
-        event.viewTransition.skipTransition();
+        //console.log('skipped pageswap')
+        //event.viewTransition.skipTransition();
       //}
     }
 
@@ -31,8 +31,8 @@
    
     if(event.viewTransition) {
       //if(main.children.length == 0 ) { 
-        console.log('skipped pagereveal')
-        event.viewTransition.skipTransition();
+        //console.log('skipped pagereveal')
+        //event.viewTransition.skipTransition();
       //}
     }
   })
@@ -97,11 +97,11 @@
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
      
-      //document.startViewTransition(() => {
+      document.startViewTransition(() => {
 
         this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
-      //});
+      });
     }
 
     async updateContent(url) {
