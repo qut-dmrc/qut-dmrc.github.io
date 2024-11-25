@@ -99,11 +99,11 @@
       let last = sessionStorage.getItem('lastVisit')
       console.log('Setting', last);
       this.contentElement.innerHTML = last;
-      document.startViewTransition(async () => {
+      //document.startViewTransition(async () => {
 
         await this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
-      });
+      //});
     }
 
     async updateContent(url) {
