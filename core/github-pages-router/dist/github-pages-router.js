@@ -94,7 +94,7 @@
       console.log('href')
       this.viewTransition(contentUrl);
     }
-    viewTransition(contentUrl) {
+    async viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
       console.log('Setting', last);
