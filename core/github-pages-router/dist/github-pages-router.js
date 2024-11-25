@@ -7,9 +7,21 @@
 
   class GHPRouter extends HTMLElement {
     contentElement = void 0;
+
     navlinks = new Set();
     contentMap = new Map();
     routes = [];
+
+    constructor() {
+      super();
+      // Load contentMap from localStorage on initialization
+      const savedContentMap = localStorage.getItem('contentMap');
+      if (savedContentMap) {
+        this.contentMap = new Map(JSON.parse(savedContentMap));
+      }
+
+    }
+
     connectedCallback() {
       addEventListener("popstate", this);
       this.contentElement = document.querySelector(
@@ -41,14 +53,24 @@
     }
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
+      let previousContent = null;
+      if(window.GHPContext == '404') { 
+        previousContent = this.contentElement.innerHTML;
+        history.pushState({ previousContent }, "", href);
+        console.log('Pushed state', previousContent, 'to history')
+      }
       document.startViewTransition(() => {
-        this.updateContent(contentUrl);
+        this.updateContent(contentUrl,previousContent);
       });
     }
-    async updateContent(url) {
+
+    async updateContent(url, previousContent) {
       const { contentElement } = this;
       if (!contentElement) return;
       try {
+        if (previousContent) {
+          contentElement.innerHTML = previousContent; // Restore previous content
+        }
         if (this.contentMap.has(url)) {
           contentElement.innerHTML = this.contentMap.get(url);
         } else {
