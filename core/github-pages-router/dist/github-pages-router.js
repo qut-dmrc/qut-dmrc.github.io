@@ -13,11 +13,11 @@
     sessionStorage.setItem('lastContent', main.innerHTML);
 
     if(event.viewTransition) {
-      if(main.children.length == 0 ) { 
+      //if(main.children.length == 0 ) { 
 
         console.log('skipped pageswap')
         event.viewTransition.skipTransition();
-      }
+      //}
     }
 
 
@@ -30,10 +30,10 @@
     console.log('Entering with',next);*/
    
     if(event.viewTransition) {
-      if(main.children.length == 0 ) { 
+      //if(main.children.length == 0 ) { 
         console.log('skipped pagereveal')
         event.viewTransition.skipTransition();
-      }
+      //}
     }
   })
 
