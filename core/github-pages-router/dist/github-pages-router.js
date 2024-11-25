@@ -43,7 +43,7 @@
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }*/
       if(main.children.length == 0) {
-        main.innerHTML = 'Flash of content';// sessionStorage.getItem('lastContent')
+        main.innerHTML = sessionStorage.getItem('nextContent');
       }
     
     }
@@ -103,6 +103,7 @@
           const text = await response.text();
           //this.contentMap.set(url, text);
           sessionStorage.setItem(url,text);
+          sessionStorage.setItem('nextContent',text);
           contentElement.innerHTML = text;
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
