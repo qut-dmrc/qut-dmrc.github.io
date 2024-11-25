@@ -59,8 +59,7 @@ body {
   --background: #16161b;
   --shadow: #18181a;
   --foreground: white;
-  /*overflow: hidden*/
-  ;
+  /*overflow: hidden*/;
 
   box-sizing: border-box;
 
