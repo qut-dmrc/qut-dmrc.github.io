@@ -52,10 +52,11 @@
       this.viewTransition(contentUrl);
     }
     viewTransition(contentUrl) {
-      // if (!document.startViewTransition) return this.updateContent(contentUrl);
+      if (!document.startViewTransition) return this.updateContent(contentUrl);
       
       const transition = document.startViewTransition(async () => {
-        await this.updateContent(contentUrl);
+        //await this.updateContent(contentUrl);
+        this.contentElement.innerHTML = await (await fetch(contentUrl)).text()
       });
     }
 
