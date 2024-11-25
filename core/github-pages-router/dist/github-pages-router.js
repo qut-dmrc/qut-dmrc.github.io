@@ -52,10 +52,10 @@
       this.viewTransition(contentUrl);
     }
     viewTransition(contentUrl) {
-      if (!document.startViewTransition) return this.updateContent(contentUrl);
+      // if (!document.startViewTransition) return this.updateContent(contentUrl);
       
-      document.startViewTransition(() => {
-        this.updateContent(contentUrl);
+      const transition = document.startViewTransition(async () => {
+        await this.updateContent(contentUrl);
       });
     }
 
@@ -65,12 +65,12 @@
       try {
         if (localStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);
-          localStorage.getItem(url);
+          sessionStorage.getItem(url);
         } else {
           const response = await fetch(url);
           const text = await response.text();
           //this.contentMap.set(url, text);
-          localStorage.setItem(url,text);
+          sessionStorage.setItem(url,text);
           contentElement.innerHTML = text;
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
