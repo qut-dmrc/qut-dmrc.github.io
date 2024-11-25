@@ -97,11 +97,11 @@
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
      
-      document.startViewTransition(() => {
+      //document.startViewTransition(() => {
 
         this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
-      });
+      //});
     }
 
     async updateContent(url) {
