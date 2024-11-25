@@ -110,7 +110,7 @@
       const { contentElement } = this;
       if (!contentElement) return;
 
-      return new Promise(async (keep,drop)=> {
+      return new Promise(async(keep,drop)=> {
         try {
         if (sessionStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);
