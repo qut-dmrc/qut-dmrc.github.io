@@ -51,9 +51,7 @@
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }*/
-      if(main.children.length == 0) {
-        main.innerHTML = sessionStorage.getItem('nextContent') ?? '';
-      }
+      
     
     }
 
@@ -63,6 +61,12 @@
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
+
+      if(main.children.length == 0) {
+        main.innerHTML = sessionStorage.getItem('lastContent') ?? '';
+        document.startViewTransition(() => main.innerHTML = sessionStorage.getItem('nextContent'))
+      }
+      
     }
 
     handleEvent(event) {
@@ -94,6 +98,7 @@
       if (!document.startViewTransition) return this.updateContent(contentUrl);
      
       document.startViewTransition(() => {
+
         this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
