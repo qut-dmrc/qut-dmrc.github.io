@@ -12,6 +12,7 @@
     
     sessionStorage.setItem('lastVisit', main.innerHTML);
 
+
     if(event.viewTransition) {
       console.log('Swapping')
       //if(main.children.length == 0 ) { 
@@ -33,10 +34,12 @@
     if(event.viewTransition) {
       console.log('Revealing')
       //main.innerHTML = sessionStorage.getItem('lastVisit');
-      //if(main.children.length == 0 ) { 
+
+      if(main.children.length == 0 ) { 
+        main.innerHTML = sessionStorage.getItem('nextContent');
         //console.log('skipped pagereveal')
         //event.viewTransition.skipTransition();
-      //}
+      }
     }
   })
 
