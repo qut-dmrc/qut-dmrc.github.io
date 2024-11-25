@@ -8,15 +8,22 @@
   let main =  document.querySelector('main')
 
   // how to signal to 404 page what to swap between?
-  window.addEventListener('pageswap', (event) => { 
-    sessionStorage.setItem('lastContent',main.innerHTML);
-  })
+  window.addEventListener('pageswap', async (event) => { 
+    
+    //sessionStorage.setItem('lastContent', main.innerHTML);
+    if(event.viewTransition) {
+      event.viewTransition.skipTransition();
+    }
+  });
 
-  window.addEventListener('pagereveal', (event) => { 
-    let last = sessionStorage.getItem('lastContent');
+  window.addEventListener('pagereveal', async (event) => { 
+    /*let last = sessionStorage.getItem('lastContent');
     let next = sessionStorage.getItem('nextContent');
-    console.log(last);
-    console.log(next);
+    console.log('Entering with',last);
+    console.log('Entering with',next);*/
+    if(event.viewTransition) {
+      event.viewTransition.skipTransition();
+    }
   })
 
   class GHPRouter extends HTMLElement {
@@ -50,23 +57,20 @@
         if (contentUrl) this.viewTransition(contentUrl);
       }
     }
-    async contentUrlFromLocation(url) {
+    contentUrlFromLocation(url) {
       const matchedRoute = this.routes.find(
         ({ href }) => url == new URL(href, document.baseURI),
       );
       if (matchedRoute) {
         let contentUrl = new URL(matchedRoute.content, document.baseURI).toString();
-        const response = await fetch(url);
-        const text = await response.text();
-        sessionStorage.setItem(contentUrl,text);
         return contentUrl 
       }
     }
-    async navigate(event) {
+    navigate(event) {
       event.preventDefault();
       const { href } = event.target;
       if (href == document.location.toString()) return;
-      const contentUrl = await this.contentUrlFromLocation(href);
+      const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
       history.pushState({}, "", href);
       console.log('href')
@@ -76,8 +80,8 @@
       if (!document.startViewTransition) return this.updateContent(contentUrl);
      
       document.startViewTransition(async () => {
-        await this.updateContent(contentUrl);
-        //this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
+        this.updateContent(contentUrl);
+        // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
     }
 
@@ -155,9 +159,9 @@
     get anchor() {
       return this.querySelector("a");
     }
-    async handleEvent(event) {
+    handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        await this.router?.navigate(event);
+        this.router?.navigate(event);
     }
   }
 
@@ -181,9 +185,9 @@
     get anchor() {
       return this.querySelector("a");
     }
-    async handleEvent(event) {
+    handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        await this.router?.navigate(event);
+        this.router?.navigate(event);
     }
     setAriaCurrent() {
       const { anchor } = this;
