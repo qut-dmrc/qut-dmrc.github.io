@@ -100,7 +100,7 @@
 
   class GHPRoute extends HTMLElement {
     router = void 0;
-    connectedCallback() {
+    async connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
@@ -114,10 +114,12 @@
         return;
       }
       this.router.routes.push({ href, content });
-      if (new URL(href, document.baseURI).toString() == location.toString())
-        this.router.viewTransition(
+      if (new URL(href, document.baseURI).toString() == location.toString()) {
+        console.log('Called viewTransition from route')
+        await this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );
+      }
     }
   }
 
