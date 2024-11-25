@@ -32,7 +32,7 @@
    
     if(event.viewTransition) {
       console.log('Revealing')
-      main.innerHTML = sessionStorage.getItem('lastVisit');
+      //main.innerHTML = sessionStorage.getItem('lastVisit');
       //if(main.children.length == 0 ) { 
         //console.log('skipped pagereveal')
         //event.viewTransition.skipTransition();
@@ -47,16 +47,16 @@
     contentMap = new Map();
     routes = [];
 
-    constructor() {
+    /*constructor() {
       super();
       // Load contentMap from localStorage on initialization
       /*const savedContentMap = localStorage.getItem('contentMap');
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
-      }*/
+      }
       
     
-    }
+    }*/
 
     connectedCallback() {
       addEventListener("popstate", this);
