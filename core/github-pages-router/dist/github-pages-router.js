@@ -10,7 +10,7 @@
   // how to signal to 404 page what to swap between?
   window.addEventListener('pageswap', async (event) => { 
     
-    sessionStorage.setItem('lastContent', main.innerHTML);
+    sessionStorage.setItem('lastVisit', main.innerHTML);
 
     if(event.viewTransition) {
       //if(main.children.length == 0 ) { 
@@ -96,7 +96,9 @@
     }
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
-     
+      let last = sessionStorage.getItem('lastVisit')
+      console.log('Setting', last);
+      this.contentElement.innerHTML = last;
       document.startViewTransition(() => {
 
         this.updateContent(contentUrl);
