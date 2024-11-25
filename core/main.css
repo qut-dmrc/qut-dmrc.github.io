@@ -2,6 +2,10 @@
   navigation: auto;
 }
 
+main {
+  view-transition-name: main-content;
+}
+
 * {
   box-sizing: border-box;
 }

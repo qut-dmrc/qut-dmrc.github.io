@@ -84,8 +84,8 @@
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
      
-      document.startViewTransition(async () => {
-        await this.updateContent(contentUrl);
+      document.startViewTransition(() => {
+        this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
     }
