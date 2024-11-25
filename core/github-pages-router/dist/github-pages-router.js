@@ -32,7 +32,7 @@
     handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        // if (contentUrl) this.viewTransition(contentUrl);
+        if (contentUrl) this.viewTransition(contentUrl);
       }
     }
     contentUrlFromLocation(url) {
@@ -70,6 +70,7 @@
           const text = await response.text();
           this.contentMap.set(url, text);
           contentElement.innerHTML = text;
+          localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
         for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
       } catch (error) {
