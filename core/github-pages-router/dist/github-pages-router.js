@@ -52,7 +52,7 @@
     handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        if (contentUrl) this.viewTransition(contentUrl);
+        if (contentUrl) this.viewTransition(contentUrl,document.querySelector('main').innerHTML);
       }
     }
     contentUrlFromLocation(url) {
@@ -75,9 +75,9 @@
       this.viewTransition(contentUrl);
     }
 
-    /*async*/ viewTransition(contentUrl) {
+    /*async*/ viewTransition(contentUrl,last) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
-      let last = sessionStorage.getItem('lastVisit')
+      last = last ?? sessionStorage.getItem('lastVisit')
       console.log('Setting', last);
       this.contentElement.innerHTML = last;
       document.startViewTransition(async () => {
