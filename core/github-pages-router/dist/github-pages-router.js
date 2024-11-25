@@ -11,9 +11,15 @@
   window.addEventListener('pageswap', async (event) => { 
     
     sessionStorage.setItem('lastContent', main.innerHTML);
-    /*if(event.viewTransition) {
-      event.viewTransition.skipTransition();
-    }*/
+
+    if(event.viewTransition) {
+      if(main.children.length == 0 ) { 
+
+        console.log('skipped pageswap')
+        event.viewTransition.skipTransition();
+      }
+    }
+
 
   });
 
@@ -23,9 +29,12 @@
     console.log('Entering with',last);
     console.log('Entering with',next);*/
    
-    /*if(event.viewTransition) {
-      event.viewTransition.skipTransition();
-    }*/
+    if(event.viewTransition) {
+      if(main.children.length == 0 ) { 
+        console.log('skipped pagereveal')
+        event.viewTransition.skipTransition();
+      }
+    }
   })
 
   class GHPRouter extends HTMLElement {
@@ -43,7 +52,7 @@
         this.contentMap = new Map(JSON.parse(savedContentMap));
       }*/
       if(main.children.length == 0) {
-        main.innerHTML = sessionStorage.getItem('nextContent');
+        main.innerHTML = sessionStorage.getItem('nextContent') ?? '';
       }
     
     }
