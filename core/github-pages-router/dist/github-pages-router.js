@@ -13,6 +13,7 @@
     sessionStorage.setItem('lastVisit', main.innerHTML);
 
     if(event.viewTransition) {
+      console.log('Swapping')
       //if(main.children.length == 0 ) { 
 
         //console.log('skipped pageswap')
@@ -30,6 +31,8 @@
     console.log('Entering with',next);*/
    
     if(event.viewTransition) {
+      console.log('Revealing')
+      main.innerHTML = sessionStorage.getItem('lastVisit');
       //if(main.children.length == 0 ) { 
         //console.log('skipped pagereveal')
         //event.viewTransition.skipTransition();
@@ -104,6 +107,8 @@
         await this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       //});
+      this.contentElement.innerHTML = last;
+      document.startViewTransition(()=>this.contentElement.innerHTML = sessionStorage.getItem(contentUrl));
     }
 
     async updateContent(url) {
@@ -113,7 +118,7 @@
       return new Promise(async(keep,drop)=> {
         try {
         if (sessionStorage.getItem(url)) {
-          contentElement.innerHTML = //this.contentMap.get(url);
+          //contentElement.innerHTML = //this.contentMap.get(url);
             sessionStorage.getItem(url);
             keep()
         } else {
@@ -122,7 +127,7 @@
           //this.contentMap.set(url, text);
           sessionStorage.setItem(url,text);
           sessionStorage.setItem('nextContent',text);
-          contentElement.innerHTML = text;
+          //contentElement.innerHTML = text;
           keep()
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
