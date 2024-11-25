@@ -35,18 +35,23 @@
         if (contentUrl) this.viewTransition(contentUrl);
       }
     }
-    contentUrlFromLocation(url) {
+    async contentUrlFromLocation(url) {
       const matchedRoute = this.routes.find(
         ({ href }) => url == new URL(href, document.baseURI),
       );
-      if (matchedRoute)
-        return new URL(matchedRoute.content, document.baseURI).toString();
+      if (matchedRoute) {
+        let contentUrl = new URL(matchedRoute.content, document.baseURI).toString();
+        const response = await fetch(url);
+        const text = await response.text();
+        sessionStorage.setItem(contentUrl,text);
+        return contentUrl 
+      }
     }
-    navigate(event) {
+    async navigate(event) {
       event.preventDefault();
       const { href } = event.target;
       if (href == document.location.toString()) return;
-      const contentUrl = this.contentUrlFromLocation(href);
+      const contentUrl = await this.contentUrlFromLocation(href);
       if (!contentUrl) return;
       history.pushState({}, "", href);
       console.log('href')
@@ -56,8 +61,8 @@
       if (!document.startViewTransition) return this.updateContent(contentUrl);
       
       const transition = document.startViewTransition(async () => {
-        //await this.updateContent(contentUrl);
-        this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
+        await this.updateContent(contentUrl);
+        //this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
     }
 
