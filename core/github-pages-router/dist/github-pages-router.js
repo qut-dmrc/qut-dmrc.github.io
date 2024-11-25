@@ -5,6 +5,18 @@
       customElements.define(elementName, ElementClass);
   }
 
+  let main =  document.querySelector('main')
+
+  // how to signal to 404 page what to swap between?
+  window.addEventListener('pageswap', (event) => { 
+    localStorage.setItem('lastContent',main.innerHTML);
+  })
+
+  window.addEventListener('pagereveal', (event) => { 
+    let last = sessionStorage.getItem('lastContent')
+    console.log(last)
+  })
+
   class GHPRouter extends HTMLElement {
     contentElement = void 0;
 
@@ -12,16 +24,15 @@
     contentMap = new Map();
     routes = [];
 
-    constructor() {
+    /*constructor() {
       super();
       // Load contentMap from localStorage on initialization
       /*const savedContentMap = localStorage.getItem('contentMap');
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
-      }*/
-      console.log(sessionStorage.getItem('last'))
-
-    }
+      }
+    
+    }*/
 
     connectedCallback() {
       addEventListener("popstate", this);
@@ -60,8 +71,7 @@
     }
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
-      sessionStorage.setItem('last',this.contentElement.innerHTML);
-      const transition = document.startViewTransition(async () => {
+      document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
         //this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
