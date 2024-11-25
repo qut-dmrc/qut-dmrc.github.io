@@ -49,9 +49,9 @@
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
       history.pushState({}, "", href);
-      this.viewTransition(contentUrl);
+      this.viewTransition(contentUrl,href);
     }
-    viewTransition(contentUrl) {
+    viewTransition(contentUrl,href) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
       let previousContent = null;
       if(window.GHPContext == '404') { 
