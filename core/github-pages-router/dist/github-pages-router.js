@@ -62,11 +62,11 @@
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
 
-      if(main.children.length == 0) {
+      /*if(main.children.length == 0) {
         main.innerHTML = sessionStorage.getItem('lastContent') ?? '';
         document.startViewTransition(() => main.innerHTML = sessionStorage.getItem('nextContent'))
-      }
-      
+      }*/
+
     }
 
     handleEvent(event) {
