@@ -56,9 +56,12 @@
 
     async handleEvent(event) {
       if (event.type == "popstate") {
-        console.log('popped');
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        if (contentUrl) await this.viewTransition(contentUrl);
+        if (contentUrl) { 
+          console.log('View transition called from popstate')
+          await this.viewTransition(contentUrl);
+
+        }
       }
     }
 
@@ -80,6 +83,7 @@
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) { console.log('no content'); return }
       history.pushState({}, "", href);
+      console.log('View transition called from navigate')
       await this.viewTransition(contentUrl);
     }
 
@@ -167,10 +171,12 @@
       }
       this.router.routes.push({ href, content });
 
-      if (new URL(href, document.baseURI).toString() == location.toString())
+      if (new URL(href, document.baseURI).toString() == location.toString()) {
+        console.log('View transition called from GHPRoute')
         await this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );
+      }
     }
   }
 
