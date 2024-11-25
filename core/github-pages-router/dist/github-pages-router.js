@@ -13,8 +13,10 @@
   })
 
   window.addEventListener('pagereveal', (event) => { 
-    let last = sessionStorage.getItem('lastContent')
-    console.log(last)
+    let last = sessionStorage.getItem('lastContent');
+    let next = sessionStorage.getItem('nextContent');
+    console.log(last);
+    console.log(next);
   })
 
   class GHPRouter extends HTMLElement {
@@ -41,6 +43,7 @@
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
     }
+
     handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
@@ -71,6 +74,7 @@
     }
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
+     
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
         //this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
@@ -80,6 +84,7 @@
     async updateContent(url) {
       const { contentElement } = this;
       if (!contentElement) return;
+
       try {
         if (sessionStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);
@@ -89,6 +94,7 @@
           const text = await response.text();
           //this.contentMap.set(url, text);
           sessionStorage.setItem(url,text);
+          sessionStorage.setItem('nextContent',text);
           contentElement.innerHTML = text;
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
