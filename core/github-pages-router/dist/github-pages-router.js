@@ -11,30 +11,21 @@
   window.addEventListener('pageswap', async (event) => { 
     
     sessionStorage.setItem('lastVisit', main.innerHTML);
-
-
     if(event.viewTransition) {
       console.log('Swapping')
       //if(main.children.length == 0 ) { 
-
         //console.log('skipped pageswap')
         //event.viewTransition.skipTransition();
       //}
     }
 
-
   });
 
   window.addEventListener('pagereveal', async (event) => { 
-    /*let last = sessionStorage.getItem('lastContent');
-    let next = sessionStorage.getItem('nextContent');
-    console.log('Entering with',last);
-    console.log('Entering with',next);*/
+    
    
     if(event.viewTransition) {
       console.log('Revealing')
-      //main.innerHTML = sessionStorage.getItem('lastVisit');
-
       //if(main.children.length == 0 ) { 
         //main.innerHTML = sessionStorage.getItem('nextContent');
         //console.log('skipped pagereveal')
@@ -50,29 +41,12 @@
     contentMap = new Map();
     routes = [];
 
-    /*constructor() {
-      super();
-      // Load contentMap from localStorage on initialization
-      /*const savedContentMap = localStorage.getItem('contentMap');
-      if (savedContentMap) {
-        this.contentMap = new Map(JSON.parse(savedContentMap));
-      }
-      
-    
-    }*/
-
     connectedCallback() {
       addEventListener("popstate", this);
       this.contentElement = document.querySelector(
         this.getAttribute("outlet") ?? "main",
       );
       if (!this.contentElement) console.error("Cannot find contentElement");
-
-      /*if(main.children.length == 0) {
-        main.innerHTML = sessionStorage.getItem('lastContent') ?? '';
-        document.startViewTransition(() => main.innerHTML = sessionStorage.getItem('nextContent'))
-      }*/
-
     }
 
     handleEvent(event) {
@@ -106,9 +80,7 @@
       console.log('Setting', last);
       this.contentElement.innerHTML = last;
       document.startViewTransition(async () => {
-
         await this.updateContent(contentUrl);
-        // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
 
     }
