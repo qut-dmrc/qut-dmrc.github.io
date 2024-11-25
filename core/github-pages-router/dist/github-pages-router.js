@@ -9,7 +9,7 @@
 
   // how to signal to 404 page what to swap between?
   window.addEventListener('pageswap', (event) => { 
-    localStorage.setItem('lastContent',main.innerHTML);
+    sessionStorage.setItem('lastContent',main.innerHTML);
   })
 
   window.addEventListener('pagereveal', (event) => { 
@@ -83,7 +83,7 @@
       try {
         if (sessionStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);
-          sessionStorage.getItem(url);
+            sessionStorage.getItem(url);
         } else {
           const response = await fetch(url);
           const text = await response.text();
