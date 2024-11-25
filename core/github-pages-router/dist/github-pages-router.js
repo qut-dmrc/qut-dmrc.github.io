@@ -12,15 +12,16 @@
     contentMap = new Map();
     routes = [];
 
-    /*constructor() {
+    constructor() {
       super();
       // Load contentMap from localStorage on initialization
-      const savedContentMap = localStorage.getItem('contentMap');
+      /*const savedContentMap = localStorage.getItem('contentMap');
       if (savedContentMap) {
         this.contentMap = new Map(JSON.parse(savedContentMap));
-      }
+      }*/
+      console.log(sessionStorage.getItem('last'))
 
-    }*/
+    }
 
     connectedCallback() {
       addEventListener("popstate", this);
@@ -59,7 +60,7 @@
     }
     viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
-      
+      sessionStorage.setItem('last',this.contentElement.innerHTML);
       const transition = document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
         //this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
@@ -116,7 +117,7 @@
       this.router.routes.push({ href, content });
       if (new URL(href, document.baseURI).toString() == location.toString()) {
         console.log('Called viewTransition from route')
-        await this.router.viewTransition(
+        this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );
       }
