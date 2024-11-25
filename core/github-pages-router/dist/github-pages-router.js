@@ -35,11 +35,11 @@
       console.log('Revealing')
       //main.innerHTML = sessionStorage.getItem('lastVisit');
 
-      if(main.children.length == 0 ) { 
-        main.innerHTML = sessionStorage.getItem('nextContent');
+      //if(main.children.length == 0 ) { 
+        //main.innerHTML = sessionStorage.getItem('nextContent');
         //console.log('skipped pagereveal')
         //event.viewTransition.skipTransition();
-      }
+      //}
     }
   })
 
@@ -104,14 +104,13 @@
       if (!document.startViewTransition) return this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
       console.log('Setting', last);
-      // this.contentElement.innerHTML = last;
-      //document.startViewTransition(async () => {
+      this.contentElement.innerHTML = last;
+      document.startViewTransition(async () => {
 
         await this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
-      //});
-      this.contentElement.innerHTML = last;
-      document.startViewTransition(()=>this.contentElement.innerHTML = sessionStorage.getItem(contentUrl));
+      });
+
     }
 
     async updateContent(url) {
@@ -121,7 +120,7 @@
       return new Promise(async(keep,drop)=> {
         try {
         if (sessionStorage.getItem(url)) {
-          //contentElement.innerHTML = //this.contentMap.get(url);
+          contentElement.innerHTML = //this.contentMap.get(url);
             sessionStorage.getItem(url);
             keep()
         } else {
@@ -130,7 +129,7 @@
           //this.contentMap.set(url, text);
           sessionStorage.setItem(url,text);
           sessionStorage.setItem('nextContent',text);
-          //contentElement.innerHTML = text;
+          contentElement.innerHTML = text;
           keep()
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
