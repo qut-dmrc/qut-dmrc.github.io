@@ -99,9 +99,9 @@
       let last = sessionStorage.getItem('lastVisit')
       console.log('Setting', last);
       this.contentElement.innerHTML = last;
-      document.startViewTransition(() => {
+      document.startViewTransition(async () => {
 
-        this.updateContent(contentUrl);
+        await this.updateContent(contentUrl);
         // this.contentElement.innerHTML = contentUrl//await (await fetch(contentUrl)).text()
       });
     }
@@ -110,10 +110,12 @@
       const { contentElement } = this;
       if (!contentElement) return;
 
-      try {
+      return new Promise(async (keep,drop)=> {
+        try {
         if (sessionStorage.getItem(url)) {
           contentElement.innerHTML = //this.contentMap.get(url);
             sessionStorage.getItem(url);
+            keep()
         } else {
           const response = await fetch(url);
           const text = await response.text();
@@ -121,12 +123,15 @@
           sessionStorage.setItem(url,text);
           sessionStorage.setItem('nextContent',text);
           contentElement.innerHTML = text;
+          keep()
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
         for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
       } catch (error) {
         console.error(error);
+        drop(error);
       }
+      })
     }
   }
 
