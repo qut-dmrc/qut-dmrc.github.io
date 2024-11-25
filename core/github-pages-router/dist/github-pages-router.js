@@ -12,7 +12,7 @@
     
     sessionStorage.setItem('lastVisit', main.innerHTML);
     if(event.viewTransition) {
-      console.log('Swapping')
+      // console.log('Swapping')
       //if(main.children.length == 0 ) { 
         //console.log('skipped pageswap')
         //event.viewTransition.skipTransition();
@@ -25,7 +25,7 @@
     
    
     if(event.viewTransition) {
-      console.log('Revealing')
+      // console.log('Revealing')
       //if(main.children.length == 0 ) { 
         //main.innerHTML = sessionStorage.getItem('nextContent');
         //console.log('skipped pagereveal')
