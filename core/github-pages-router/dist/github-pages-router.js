@@ -136,9 +136,9 @@
     get anchor() {
       return this.querySelector("a");
     }
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
   }
 
@@ -162,9 +162,9 @@
     get anchor() {
       return this.querySelector("a");
     }
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
     setAriaCurrent() {
       const { anchor } = this;
