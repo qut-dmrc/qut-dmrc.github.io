@@ -32,7 +32,7 @@
     handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        if (contentUrl) this.viewTransition(contentUrl);
+        // if (contentUrl) this.viewTransition(contentUrl);
       }
     }
     contentUrlFromLocation(url) {
@@ -49,28 +49,20 @@
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
       history.pushState({}, "", href);
-      this.viewTransition(contentUrl,href);
+      this.viewTransition(contentUrl);
     }
-    viewTransition(contentUrl,href) {
+    viewTransition(contentUrl) {
       if (!document.startViewTransition) return this.updateContent(contentUrl);
-      let previousContent = null;
-      if(window.GHPContext == '404') { 
-        previousContent = this.contentElement.innerHTML;
-        history.pushState({ previousContent }, "", href);
-        console.log('Pushed state', previousContent, 'to history')
-      }
+      
       document.startViewTransition(() => {
-        this.updateContent(contentUrl,previousContent);
+        this.updateContent(contentUrl);
       });
     }
 
-    async updateContent(url, previousContent) {
+    async updateContent(url) {
       const { contentElement } = this;
       if (!contentElement) return;
       try {
-        if (previousContent) {
-          contentElement.innerHTML = previousContent; // Restore previous content
-        }
         if (this.contentMap.has(url)) {
           contentElement.innerHTML = this.contentMap.get(url);
         } else {
