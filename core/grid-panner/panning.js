@@ -3,7 +3,7 @@ let yPanTarget = 0;
 let xPanCurrent = 0;
 let yPanCurrent = 0;
 
-const gridContainer = document.querySelector('.panner');
+const gridContainer = document.querySelector('menu');
 const containerRect = gridContainer.getBoundingClientRect();
 const containerWidth = containerRect.width;
 const containerHeight = containerRect.height;
