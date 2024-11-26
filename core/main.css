@@ -60,10 +60,14 @@
     width: 100dvw;
     height: 100dvh;
 
-    margin-inline: 10% 90%;
-    margin-block: 10%;
+    /*margin-inline: 10% 90%;
+    margin-block: 10%;*/
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    transform-origin: 50% 50%;
+    /*transform-origin: 50% 50%;*/
 
   }
 
@@ -81,7 +85,7 @@
     background-color: white;
 
     transform: rotate(-35deg) skew(22deg);
-    /*transform-origin: 78% 0;*/
+    transform-origin: 40% 50%;
 
     box-shadow: -20px 20px 60px var(--shadow);
     
@@ -124,7 +128,7 @@
 
     > :not(aside,.active):hover {
       outline: 1px solid white;
-      transform: translate(0.5rem, -0.5rem);
+      transform: translate(0.75rem, -0.75rem);
       z-index:2;
     }
 
@@ -132,6 +136,7 @@
     border: 1px solid white;
     animation: 0.125s ease-out normal forwards link-down;
     view-transition-name: disabled;
+    pointer-events: none;
   }
   
     h1 {

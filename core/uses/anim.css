@@ -60,13 +60,13 @@
     }
 
     to {
-      transform: translate(0.5rem, -0.5rem);
+      transform: translate(0.75rem, -0.75rem);
     }
   }
 
   @keyframes link-down {
     from {
-      transform: translate(0.5rem, -0.5rem);
+      transform: translate(0.75rem, -0.75rem);
     }
 
     to {
