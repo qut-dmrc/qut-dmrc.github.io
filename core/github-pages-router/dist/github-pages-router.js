@@ -4,6 +4,14 @@
       customElements.define(elementName, ElementClass);
   }
 
+  let main =  document.querySelector('main')
+
+  window.addEventListener('pageswap', async (event) => { 
+    
+    sessionStorage.setItem('lastVisit', main.innerHTML);
+
+  });
+
   class GHPRouter extends HTMLElement {
     contentElement = null;
     navlinks = new Set();
@@ -47,10 +55,14 @@
         this.updateContent(contentUrl);
         return;
       }
+      let last = sessionStorage.getItem('lastVisit')
+      // console.log('Setting', last);
+      this.contentElement.innerHTML = last;
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
       });
-    }
+
+    } 
 
     async updateContent(url) {
       const { contentElement } = this;
@@ -58,12 +70,14 @@
 
       try {
         if (this.contentMap.has(url)) {
-          contentElement.innerHTML = this.contentMap.get(url);
+          //contentElement.innerHTML = this.contentMap.get(url);
+          contentElement.innerHTML = sessionStorage.getItem(url);
         } else {
           const response = await fetch(url);
           if (!response.ok) throw new Error(`Failed to fetch content from ${url}`);
           const text = await response.text();
-          this.contentMap.set(url, text);
+          //this.contentMap.set(url, text);
+          sessionStorage.setItem(url,text);
           contentElement.innerHTML = text;
         }
         requestAnimationFrame(() => {
