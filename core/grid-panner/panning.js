@@ -84,7 +84,7 @@ function handleMouseMove(event) {
   
 }
 
-window.addEventListener('pageswap', (event) => { 
+window.addEventListener('pagereveal', (event) => { 
   sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
 });
 
