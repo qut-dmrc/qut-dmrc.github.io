@@ -75,8 +75,11 @@
       this.viewTransition(contentUrl);
     }
 
-    /*async*/ viewTransition(contentUrl) {
-      if (!document.startViewTransition) return this.updateContent(contentUrl);
+    viewTransition(contentUrl) {
+      /*if (!document.startViewTransition) {
+        this.updateContent(contentUrl);
+        return;
+      }*/
       let last = sessionStorage.getItem('lastVisit')
       // console.log('Setting', last);
       this.contentElement.innerHTML = last;
@@ -84,35 +87,37 @@
         await this.updateContent(contentUrl);
       });
 
-    }
+    } 
 
     async updateContent(url) {
       const { contentElement } = this;
       if (!contentElement) return;
 
-      return new Promise(async (keep,drop)=> {
+      return new Promise(async (keep,drop)=> { 
         try {
-        if (sessionStorage.getItem(url)) {
-          contentElement.innerHTML = //this.contentMap.get(url);
-            sessionStorage.getItem(url);
+          if (this.contentMap.has(url)) {
+            //contentElement.innerHTML = this.contentMap.get(url);
+            contentElement.innerHTML = sessionStorage.getItem(url);
+            keep();
+          } else {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Failed to fetch content from ${url}`);
+            const text = await response.text();
+            //this.contentMap.set(url, text);
+            sessionStorage.setItem(url,text);
+            contentElement.innerHTML = text;
             keep()
-        } else {
-          const response = await fetch(url);
-          const text = await response.text();
-          //this.contentMap.set(url, text);
-          sessionStorage.setItem(url,text);
-          sessionStorage.setItem('nextContent',text);
-          contentElement.innerHTML = text;
-          keep()
-          //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+          }
+          requestAnimationFrame(() => {
+            for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
+          });
+        } catch (error) {
+          console.error(`Error updating content for ${url}:`, error);
+          drop(error);
         }
-        for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-      } catch (error) {
-        console.error(error);
-        drop(error);
-      }
       })
     }
+    
   }
 
   defineComponent("ghp-router", GHPRouter);
