@@ -131,12 +131,14 @@
         return;
       }
       this.router.routes.push({ href, content });
-      if (new URL(href, document.baseURI).toString() == location.toString()) {
-        // if(this.router.debug) console.log('Called viewTransition from route')
-        await this.router.viewTransition(
-          new URL(content, document.baseURI).toString(),
-        );
-      }
+      window.addEventListener("load",async()=>{
+        if (new URL(href, document.baseURI).toString() == location.toString()) {
+          // if(this.router.debug) console.log('Called viewTransition from route')
+          await this.router.viewTransition(
+            new URL(content, document.baseURI).toString(),
+          );
+        }
+      })
     }
   }
 
