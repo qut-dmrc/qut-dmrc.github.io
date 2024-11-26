@@ -14,6 +14,7 @@
     box-sizing: border-box;
   }
 
+  menu,
   ul {
     margin: 0;
     padding: 0;
@@ -43,7 +44,7 @@
     background-color: var(--background);
   }
 
-  body > :first-child {
+  body> :first-child {
     /*ghp-router*/
     position: fixed;
     display: block;
@@ -70,6 +71,9 @@
     margin-block: 10%;*/
 
     display: flex;
+
+    padding-bottom:5%;
+    padding-right:5%;
     justify-content: center;
     align-items: center;
 
@@ -83,11 +87,16 @@
 
     grid-auto-columns: var(--colwidth);
     grid-auto-rows: var(--rowheight);
+
+    /* grid-template-columns: repeat(auto-fit, minmax(calc(4*var(--colwidth)), 1fr));
+    grid-template-rows: repeat(auto-fit, minmax(calc(3*var(--rowheight)), 1fr));*/
+
     grid-auto-flow: dense;
     gap: 0% 0%;
 
     width: fit-content;
     height: fit-content;
+    max-width: 100%;
     background-color: white;
 
     transform: rotate(-35deg) skew(22deg);
@@ -97,14 +106,13 @@
 
   }
 
-  .grid-container > * {
+  .grid-container>* {
 
     grid-column: span 4;
     grid-row: span 3;
+
     background-color: var(--background);
     color: white;
-    /*padding-block: 16px;
-    padding-inline: 20px;*/
 
     -webkit-column-break-inside: avoid;
     column-break-inside: avoid;
@@ -113,14 +121,48 @@
 
   }
 
-  .grid-container > aside {
+  .grid-container>aside {
     grid-column: span 8;
     grid-row: span 2;
   }
 
+  @media (max-width: 767px) {
+
+    :root {
+      --colwidth: calc(minmax(4rem, 1fr));
+    }
+
+    menu.panner {
+      align-items: start; 
+      padding: 2rem;
+    }
+
+    .grid-container {
+      transform: unset;
+      transform-origin: unset;
+      border: 1px solid white;
+
+      > * {
+        grid-column: span 8;
+        grid-row: span 2;
+      }
+
+      > :first-child {
+        grid-row:span 3;
+      }
+
+      > :not(:last-child) {
+        border-bottom: 1px solid white;
+      }
+
+    }
+    
+  
+  }
+
   .grid-container {
 
-    a > * {
+    a>* {
       width: 100%;
       height: 100%;
       color: white;
@@ -131,17 +173,22 @@
       padding-inline: 20px;
     }
 
+    :focus {
+      outline: none;
+      >* {
+        outline: 3px solid white;
+      }
+    }
+
     ul:not(:has(> .active), :has(> :focus)):hover {
-      border: 1px solid white;
+      outline: 2px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
-      transition-duration: 0.2s;
       z-index: 2;
     }
 
+    /* issue: not always triggered between pageswaps */
     ul:has(> .active) {
-      border: 1px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
-      /*transition-duration: 0s;*/
       animation: 0.125s ease-out normal forwards link-down;
       view-transition-name: disabled;
       pointer-events: none;
@@ -158,26 +205,6 @@
       all: unset;
       font-size: 1rem;
       display: block;
-    }
-  }
-
-  @keyframes link-down {
-    from {
-      transform: translate(var(--popout), calc(-1 * var(--popout)));
-    }
-
-    to {
-      transform: translate(0, 0);
-    }
-  }
-
-  @keyframes link-up {
-    from {
-      transform: translate(0, 0);
-    }
-
-    to {
-      transform: translate(var(--popout), calc(-1 * var(--popout)));
     }
   }
 

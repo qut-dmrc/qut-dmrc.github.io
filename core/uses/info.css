@@ -1,7 +1,20 @@
 @layer components {
+
   main {
     position: fixed;
     left: 4rem;
     bottom: 4rem;
+  }
+
+  @media (max-width: 767px) {
+    main {
+      left: 0;
+      bottom: 0;
+      background: var(--background);
+      padding-left: 2rem;
+      padding-bottom: 1rem;
+      width: 100%;
+      border-top: 1px solid white;
+    }
   }
 }
