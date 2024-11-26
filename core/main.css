@@ -1,4 +1,4 @@
-@layer reset, theme, transitions, layout, pages, components;
+@layer reset, theme, layout, pages, components,transitions;
 
 /*@import url('uses/anim.css') layer(transitions);
 @import url('uses/grid.css') layer(layout);
