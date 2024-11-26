@@ -130,7 +130,7 @@
         console.error("Missing href or content attribute");
         return;
       }
-      
+
       this.router.routes.push({ href, content });
 
       if (new URL(href, document.baseURI).toString() == location.toString()) {
@@ -141,6 +141,15 @@
           );
         })
       }
+
+      const prefetchUrl = new URL(content, document.baseURI).toString();
+      if (prefetchUrl !== location.toString()) {
+        let response = await fetch(prefetchUrl);
+        let text = await response.text()
+        console.log("prefetched", prefetchUrl,text)
+        sessionStorage.setItem(prefetchUrl,text)
+      }
+
     }
   }
 
