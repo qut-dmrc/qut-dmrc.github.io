@@ -113,6 +113,10 @@ applyPanningState();
 // Initial setup of event listeners
 setupEventListeners();
 
+window.addEventListener('pageswap', async (event) => { 
+  sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+})
+
 // Listen for changes in the viewport size
 const mediaQueryList = window.matchMedia("(max-width: 768px)");
 mediaQueryList.addListener(setupEventListeners);
