@@ -9,7 +9,7 @@
 
   window.addEventListener('pageswap', async (event) => {
 
-    sessionStorage.setItem('lastVisit', main.innerHTML);
+    sessionStorage.setItem('lastVisit', document.querySelector('main').innerHTML);
 
   });
 
