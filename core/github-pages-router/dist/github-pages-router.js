@@ -148,7 +148,6 @@
     }
 
     backgroundFetch(contentUrl) {
-      console.log('fetching',contentUrl)
       fetch(contentUrl)
         .then(response => {
           if (!response.ok) {
@@ -158,8 +157,9 @@
         })
         .then(data => {
           // Store the fetched data
-          sessionStorage.setItem(contentUrl, text)
-          //if(this.router.debug) console.log('Prefetched content:', contentUrl, data);
+          sessionStorage.setItem(contentUrl, data)
+          //if(this.router.debug) 
+          console.log('Prefetched content:', contentUrl, data);
         })
         .catch(error => {
           // if(this.router.debug) console.error('Fetch error:', error);
