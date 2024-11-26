@@ -5,10 +5,10 @@
       customElements.define(elementName, ElementClass);
   }
 
-  let main =  document.querySelector('main')
+  let main = document.querySelector('main')
 
-  window.addEventListener('pageswap', async (event) => { 
-    
+  window.addEventListener('pageswap', async (event) => {
+
     sessionStorage.setItem('lastVisit', main.innerHTML);
 
   });
@@ -48,7 +48,7 @@
       );
       if (matchedRoute) {
         let contentUrl = new URL(matchedRoute.content, document.baseURI).toString();
-        return contentUrl 
+        return contentUrl
       }
     }
 
@@ -77,27 +77,27 @@
       const { contentElement } = this;
       if (!contentElement) return;
 
-      return new Promise(async (keep,drop)=> {
+      return new Promise(async (keep, drop) => {
         try {
-        if (sessionStorage.getItem(url)) {
-          contentElement.innerHTML = //this.contentMap.get(url);
-            sessionStorage.getItem(url);
+          if (sessionStorage.getItem(url)) {
+            contentElement.innerHTML = //this.contentMap.get(url);
+              sessionStorage.getItem(url);
             keep()
-        } else {
-          const response = await fetch(url);
-          const text = await response.text();
-          //this.contentMap.set(url, text);
-          sessionStorage.setItem(url,text);
-          sessionStorage.setItem('nextContent',text);
-          contentElement.innerHTML = text;
-          keep()
-          //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+          } else {
+            const response = await fetch(url);
+            const text = await response.text();
+            //this.contentMap.set(url, text);
+            sessionStorage.setItem(url, text);
+            sessionStorage.setItem('nextContent', text);
+            contentElement.innerHTML = text;
+            keep()
+            //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+          }
+          for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
+        } catch (error) {
+          console.error(error);
+          drop(error);
         }
-        for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-      } catch (error) {
-        console.error(error);
-        drop(error);
-      }
       })
     }
   }
@@ -134,7 +134,7 @@
       this.router.routes.push({ href, content });
 
       if (new URL(href, document.baseURI).toString() == location.toString()) {
-        window.addEventListener("load",async()=>{
+        window.addEventListener("load", async () => {
           // if(this.router.debug) console.log('Called viewTransition from route')
           await this.router.viewTransition(
             new URL(content, document.baseURI).toString(),
@@ -142,14 +142,28 @@
         })
       }
 
-      const prefetchUrl = new URL(content, document.baseURI).toString();
-      if (prefetchUrl !== location.toString()) {
-        let response = await fetch(prefetchUrl);
-        let text = await response.text()
-        console.log("prefetched", prefetchUrl,text)
-        sessionStorage.setItem(prefetchUrl,text)
-      }
+      let contentUrl = new URL(content, document.baseURI).toString()
+      this.backgroundFetch(contentUrl);
 
+    }
+
+    backgroundFetch(contentUrl) {
+      console.log('fetching',contentUrl)
+      fetch(contentUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          // Store the fetched data
+          sessionStorage.setItem(contentUrl, text)
+          //if(this.router.debug) console.log('Prefetched content:', contentUrl, data);
+        })
+        .catch(error => {
+          // if(this.router.debug) console.error('Fetch error:', error);
+        });
     }
   }
 
@@ -217,7 +231,7 @@
       }
     }
   }
-  
+
   defineComponent("ghp-navlink", GHPNavlink);
-  
+
 })();
