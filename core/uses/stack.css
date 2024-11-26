@@ -1,0 +1,26 @@
+.stack {
+  display: grid;
+  place-content: center;
+  --base-translate: 4px; /* Base translation value */
+ 
+  grid-column: 1 / 3;
+ /* transform: rotate(-35deg) skew(22deg);
+  
+  transform-origin: 70% 100%;*/
+}
+
+.stack > div {
+  grid-area: 1 / 1;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid rgb(255, 255, 255);
+  transform: 
+    translate(
+      calc(var(--base-translate) * 1 * var(--index, number)),
+      calc(var(--base-translate) * -1 * var(--index, number))
+    );
+  width: 100%;
+
+}

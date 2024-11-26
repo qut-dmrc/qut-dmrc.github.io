@@ -5,34 +5,13 @@
       customElements.define(elementName, ElementClass);
   }
 
-  let main =  document.querySelector('main')
+  let main = document.querySelector('main')
 
-  // how to signal to 404 page what to swap between?
-  window.addEventListener('pageswap', async (event) => { 
-    
+  window.addEventListener('pageswap', async (event) => {
+
     sessionStorage.setItem('lastVisit', main.innerHTML);
-    if(event.viewTransition) {
-      // console.log('Swapping')
-      //if(main.children.length == 0 ) { 
-        //console.log('skipped pageswap')
-        //event.viewTransition.skipTransition();
-      //}
-    }
 
   });
-
-  window.addEventListener('pagereveal', async (event) => { 
-    
-   
-    if(event.viewTransition) {
-      //console.log('Revealing')
-      //if(main.children.length == 0 ) { 
-        //main.innerHTML = sessionStorage.getItem('nextContent');
-        //console.log('skipped pagereveal')
-        //event.viewTransition.skipTransition();
-      //}
-    }
-  })
 
   class GHPRouter extends HTMLElement {
     contentElement = void 0;
@@ -40,6 +19,8 @@
     navlinks = new Set();
     contentMap = new Map();
     routes = [];
+
+    debug = window.debug ?? false;
 
     constructor() {
       super();
@@ -54,36 +35,37 @@
       if (!this.contentElement) console.error("Cannot find contentElement");
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        if (contentUrl) this.viewTransition(contentUrl);
+        if (contentUrl) await this.viewTransition(contentUrl);
       }
     }
+
     contentUrlFromLocation(url) {
       const matchedRoute = this.routes.find(
         ({ href }) => url == new URL(href, document.baseURI),
       );
       if (matchedRoute) {
         let contentUrl = new URL(matchedRoute.content, document.baseURI).toString();
-        return contentUrl 
+        return contentUrl
       }
     }
-    navigate(event) {
+
+    async navigate(event) {
       event.preventDefault();
       const { href } = event.target;
       if (href == document.location.toString()) return;
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
-      history.pushState(contentUrl, "", href);
-      console.log('href')
-      this.viewTransition(contentUrl);
+      history.pushState({}, "", href);
+      await this.viewTransition(contentUrl);
     }
 
-    /*async*/ viewTransition(contentUrl) {
-      if (!document.startViewTransition) return this.updateContent(contentUrl);
+    async viewTransition(contentUrl) {
+      if (!document.startViewTransition) return await this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
-      // console.log('Setting', last);
+      if(this.debug) console.log('Setting', last);
       this.contentElement.innerHTML = last;
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
@@ -95,32 +77,32 @@
       const { contentElement } = this;
       if (!contentElement) return;
 
-      return new Promise(async (keep,drop)=> {
+      return new Promise(async (keep, drop) => {
         try {
-        if (sessionStorage.getItem(url)) {
-          contentElement.innerHTML = //this.contentMap.get(url);
-            sessionStorage.getItem(url);
+          if (sessionStorage.getItem(url)) {
+            contentElement.innerHTML = //this.contentMap.get(url);
+              sessionStorage.getItem(url);
             keep()
-        } else {
-          const response = await fetch(url);
-          const text = await response.text();
-          //this.contentMap.set(url, text);
-          sessionStorage.setItem(url,text);
-          sessionStorage.setItem('nextContent',text);
-          contentElement.innerHTML = text;
-          keep()
-          //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+          } else {
+            const response = await fetch(url);
+            const text = await response.text();
+            //this.contentMap.set(url, text);
+            sessionStorage.setItem(url, text);
+            contentElement.innerHTML = text;
+            //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+            keep()
+          }
+          for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
+        } catch (error) {
+          console.error(error);
+          drop(error);
         }
-        for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-      } catch (error) {
-        console.error(error);
-        drop(error);
-      }
       })
     }
   }
 
   defineComponent("ghp-router", GHPRouter);
+
   function findParentRouter(initialElement) {
     /*let { parentElement: element } = initialElement;
     while (element) {
@@ -133,6 +115,7 @@
 
   class GHPRoute extends HTMLElement {
     router = void 0;
+
     async connectedCallback() {
       try {
         this.router = findParentRouter(this);
@@ -146,12 +129,40 @@
         console.error("Missing href or content attribute");
         return;
       }
+
       this.router.routes.push({ href, content });
+
       if (new URL(href, document.baseURI).toString() == location.toString()) {
-        console.log('Called viewTransition from route')
-        this.router.viewTransition(
-          new URL(content, document.baseURI).toString(),
-        );
+        window.addEventListener("load", async () => {
+          if(this.router.debug) console.log('Called viewTransition from route')
+          await this.router.viewTransition(
+            new URL(content, document.baseURI).toString(),
+          );
+        })
+      }
+
+      let contentUrl = new URL(content, document.baseURI).toString()
+      this.backgroundFetch(contentUrl);
+
+    }
+
+    backgroundFetch(contentUrl) {
+      if(!sessionStorage.getItem(contentUrl)) {
+      fetch(contentUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(data => {
+          // Store the fetched data
+          sessionStorage.setItem(contentUrl, data)
+          if(this.router.debug) console.log('Prefetched content:', contentUrl, data);
+        })
+        .catch(error => {
+          if(this.router.debug) console.error('Fetch error:', error);
+        });
       }
     }
   }
@@ -159,7 +170,9 @@
   defineComponent("ghp-route", GHPRoute);
 
   class GHPLink extends HTMLElement {
+
     router = void 0;
+
     connectedCallback() {
       try {
         this.router = findParentRouter(this);
@@ -168,12 +181,14 @@
       }
       this.anchor?.addEventListener("click", this);
     }
+
     get anchor() {
       return this.querySelector("a");
     }
-    handleEvent(event) {
+
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
   }
 
@@ -181,6 +196,7 @@
 
   class GHPNavlink extends HTMLElement {
     router = void 0;
+
     connectedCallback() {
       try {
         this.router = findParentRouter(this);
@@ -190,17 +206,24 @@
       this.anchor?.addEventListener("click", this);
       this.setAriaCurrent();
       this.router?.navlinks.add(this);
+      if(new URL(this.anchor?.href, document.baseURI).toString() == location.toString()) {
+        this.classList.add('active');
+      }
     }
+
     disconnectedCallback() {
       this.router?.navlinks.delete(this);
     }
+
     get anchor() {
       return this.querySelector("a");
     }
-    handleEvent(event) {
+
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
+
     setAriaCurrent() {
       const { anchor } = this;
       if (!anchor) return;
@@ -211,6 +234,7 @@
       }
     }
   }
+
   defineComponent("ghp-navlink", GHPNavlink);
-  
+
 })();

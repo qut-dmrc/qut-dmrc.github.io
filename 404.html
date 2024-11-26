@@ -5,75 +5,74 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DMRC - Research code repository</title>
+  
   <link rel="stylesheet" href="./core/main.css" />
-
-  <!--<link rel="expect" blocking="render" href="#base">
-  <link rel="expect" blocking="render" href="#page1">
-  <link rel="expect" blocking="render" href="#page2">
-  <link rel="expect" blocking="render" href="#page3">-->
+  <link rel="stylesheet" href="./core/uses/anim.css" />
+  <link rel="stylesheet" href="./core/uses/grid.css" />
+  <link rel="stylesheet" href="./core/uses/info.css" />
 
 </head>
 
 <body>
 
   <ghp-router>
+    
+    <!-- routes -->
 
-    <ghp-route href="./" content="./post/base.html"></ghp-route>
+    <ghp-route href="./home" content="./post/base.html"></ghp-route>
     <ghp-route href="./page1" content="./post/page1.html"></ghp-route>
     <ghp-route href="./page2" content="./post/page2.html"></ghp-route>
     <ghp-route href="./page3" content="./post/page3.html"></ghp-route>
 
-    <!-- Your HTML layout -->
+    <!-- layout -->
 
-    <div class="panner">
-    <nav role="navigation" class="grid-container">
+    <menu class="panner">
+      <nav role="navigation" class="grid-container">
 
-      <ghp-navlink>
-        <a href="./" aria-current="">
-          <div class="grid-item logo">
-            <h1>DMRC</h1>
-            <p>research code repository</p>
-          </div>
-        </a>
-      </ghp-navlink>
+        <ghp-navlink>
+          <a href="./home" aria-current="">
+            <div>
+              <h1>DMRC</h1>
+              <p>research code repository</p>
+            </div>
+          </a>
+        </ghp-navlink>
 
-      <ghp-navlink>
-        <a href="./page1" aria-current="">
-          <div class="grid-item">
-            <h1>PAGE 1</h1>
-            <p>linked content</p>
-          </div>
-        </a>
-      </ghp-navlink>
+        <ghp-navlink>
+          <a href="./page1" aria-current="">
+            <div>
+              <h1>PAGE 1</h1>
+              <p>linked content</p>
+            </div>
+          </a>
+        </ghp-navlink>
 
-       
-        <div class="grid-item static">
+        <aside>
           <h1>ABOUT</h1>
           <p>A selection of project pages hosted by QUT's Digital Media Research Centre.</p>
-        </div>
+        </aside>
 
+        <ghp-navlink>
+          <a href="./page2" aria-current="">
+            <div>
+              <h1>PAGE 2</h1>
+              <p>linked content</p>
+            </div>
+          </a>
+        </ghp-navlink>
 
-      <ghp-navlink>
-        <a href="./page2" aria-current="">
-          <div class="grid-item">
-            <h1>PAGE 2</h1>
-            <p>linked content</p>
-          </div>
-        </a>
-      </ghp-navlink>
+        <ghp-navlink>
+          <a href="./page3" aria-current="">
+            <div>
+              <h1>PAGE 3</h1>
+              <p>linked content</p>
+            </div>
+          </a>
+        </ghp-navlink>
 
-      <ghp-navlink>
-        <a href="./page3" aria-current="">
-          <div class="grid-item last-item">
-            <h1>PAGE 3</h1>
-            <p>linked content</p>
-          </div>
-        </a>
-      </ghp-navlink>
-     
-    </nav>
-  
-  </div>
+      </nav>
+
+    </menu>
 
   </ghp-router>
 
@@ -84,7 +83,7 @@
       -->
   </main>
 
-  <script>console.log('On 404.html'); window.GHPContext = '404';</script>
+  <script>console.log('On index.html'); window.GHPContext = '404'; window.debug = false;</script>
   <script src="./core/grid-panner/panning.js"></script>
   <script src="./core/github-pages-router/dist/github-pages-router.js"></script>
 

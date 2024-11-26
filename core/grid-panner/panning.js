@@ -1,9 +1,11 @@
+let debug = window.debug ?? false;
+
 let xPanTarget = 0;
 let yPanTarget = 0;
 let xPanCurrent = 0;
 let yPanCurrent = 0;
 
-const gridContainer = document.querySelector('.panner');
+const gridContainer = document.querySelector('menu');
 const containerRect = gridContainer.getBoundingClientRect();
 const containerWidth = containerRect.width;
 const containerHeight = containerRect.height;
@@ -31,7 +33,7 @@ function updatePanning() {
   // Apply the transformation to the grid container
   gridContainer.style.transform = `translate(${xPanCurrent}px, ${yPanCurrent}px)`;
 
-  // Store the panning state in localStorage
+  // Store the panning state in sessionStorage
   localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
 
   // Continue animating until the target position is reached
@@ -40,7 +42,7 @@ function updatePanning() {
   }
 }
 
-// Retrieve the panning state from localStorage and apply it
+// Retrieve the panning state from sessionStorage and apply it
 function applyPanningState() {
   const storedState = localStorage.getItem('panningState');
   if (storedState) {
@@ -81,6 +83,7 @@ function handleMouseMove(event) {
 
   // Start the panning update loop
   updatePanning();
+  
 }
 
 // Function to detect if the device is in a mobile-like viewport
@@ -91,12 +94,12 @@ function isMobileDevice() {
 // Add or remove the event listener based on the device type
 function setupEventListeners() {
   if (isMobileDevice()) {
-    console.log('Mobile-like viewport detected. Removing mousemove event listener.');
+    if(debug) console.log('Mobile-like viewport detected. Removing mousemove event listener.');
 
     gridContainer.style.transform = null;
     document.removeEventListener('mousemove', handleMouseMove);
   } else {
-    console.log('Desktop-like viewport detected. Adding mousemove event listener.');
+    if(debug) console.log('Desktop-like viewport detected. Adding mousemove event listener.');
     document.addEventListener('mousemove', handleMouseMove);
   }
 }
@@ -106,6 +109,18 @@ applyPanningState();
 
 // Initial setup of event listeners
 setupEventListeners();
+
+/*window.addEventListener('pageswap', async (event) => { 
+  localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  applyPanningState();
+  updatePanning();
+})
+
+window.addEventListener('pagereveal', async (event) => { 
+  localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  applyPanningState();
+  updatePanning()
+})*/
 
 // Listen for changes in the viewport size
 const mediaQueryList = window.matchMedia("(max-width: 768px)");
