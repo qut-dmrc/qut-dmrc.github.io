@@ -80,8 +80,8 @@
       this.viewTransition(contentUrl);
     }
 
-    /*async*/ viewTransition(contentUrl) {
-      if (!document.startViewTransition) return this.updateContent(contentUrl);
+    async viewTransition(contentUrl) {
+      if (!document.startViewTransition) return await this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
       // console.log('Setting', last);
       this.contentElement.innerHTML = last;
