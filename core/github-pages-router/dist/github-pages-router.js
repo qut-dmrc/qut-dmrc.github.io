@@ -208,7 +208,7 @@
       this.setAriaCurrent();
       this.router?.navlinks.add(this);
       if(new URL(this.anchor?.href, document.baseURI).toString() == location.toString()) {
-        this.parentNode.classList.add('active');
+        this.classList.add('active');
       }
     }
 

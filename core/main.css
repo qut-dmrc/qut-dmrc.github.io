@@ -8,10 +8,6 @@
   navigation: none;
 }
 
-@view-transition {
-  navigation: none;
-}
-
 @layer reset {
 
   * {
@@ -132,13 +128,13 @@
       padding-inline: 20px;
     }
 
-    > :not(aside,.active):hover {
+    > :not(aside,:has(> .active)):hover {
       outline: 1px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
       z-index:2;
     }
 
-  .active {
+  :has(> .active) {
     border: 1px solid white;
     animation: 0.125s ease-out normal forwards link-down;
     view-transition-name: disabled;
@@ -156,6 +152,26 @@
       all: unset;
       font-size: 1rem;
       display: block;
+    }
+  }
+
+  @keyframes link-down {
+    from {
+      transform: translate(var(--popout), calc(-1 * var(--popout)));
+    }
+
+    to {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes link-up {
+    from {
+      transform: translate(0, 0);
+    }
+
+    to {
+      transform: translate(var(--popout), calc(-1 * var(--popout)));
     }
   }
 

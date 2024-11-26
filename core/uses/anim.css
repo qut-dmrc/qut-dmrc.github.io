@@ -54,26 +54,6 @@
     }
   }
 
-  @keyframes link-up {
-    from {
-      transform: translate(0, 0);
-    }
-
-    to {
-      transform: translate(var(--popout), calc(-1 * var(--popout)));
-    }
-  }
-
-  @keyframes link-down {
-    from {
-      transform: translate(var(--popout), calc(-1 * var(--popout)));
-    }
-
-    to {
-      transform: translate(0, 0);
-    }
-  }
-
   @keyframes bounce {
 
     0%,
