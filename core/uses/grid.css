@@ -17,7 +17,7 @@
 
     box-shadow: -20px 20px 60px var(--shadow);
 
-    >* {
+    > * {
 
       grid-column: span 4;
       grid-row: span 3;

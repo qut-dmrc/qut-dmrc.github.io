@@ -1,6 +1,6 @@
-/*@view-transition {
-  navigation: auto;
-}*/
+@view-transition {
+  navigation: none;
+}
 
 @layer transitions {
   main {
