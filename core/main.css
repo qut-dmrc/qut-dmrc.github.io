@@ -18,6 +18,11 @@
     box-sizing: border-box;
   }
 
+  ul {
+    margin:0;
+    padding: 0;
+  }
+
 }
 
 @layer theme {
@@ -26,6 +31,7 @@
     --background: #16161b;
     --shadow: #18181a;
     --foreground: white;
+    --popout: 0.7rem;
   }
 }
 
@@ -128,7 +134,7 @@
 
     > :not(aside,.active):hover {
       outline: 1px solid white;
-      transform: translate(0.75rem, -0.75rem);
+      transform: translate(var(--popout), calc(-1 * var(--popout)));
       z-index:2;
     }
 

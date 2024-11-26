@@ -60,13 +60,13 @@
     }
 
     to {
-      transform: translate(0.75rem, -0.75rem);
+      transform: translate(var(--popout), calc(-1 * var(--popout)));
     }
   }
 
   @keyframes link-down {
     from {
-      transform: translate(0.75rem, -0.75rem);
+      transform: translate(var(--popout), calc(-1 * var(--popout)));
     }
 
     to {
