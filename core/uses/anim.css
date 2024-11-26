@@ -18,6 +18,16 @@
     }
   }
 
+  /*::view-transition-old(link-pop) {
+    animation: 0.1s;
+    transform: translate(var(--popout), calc(-1 * var(--popout)));
+    visibility: hidden;
+  }
+
+  ::view-transition-new(link-pop) {
+    animation: 0.2s 0.0s ease both link-down;
+  }*/
+
   ::view-transition-old(page-heading) {
     animation: 0.4s 0.075s ease both main-exit;
   }

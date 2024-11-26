@@ -209,6 +209,7 @@
       this.router?.navlinks.add(this);
       if(new URL(this.anchor?.href, document.baseURI).toString() == location.toString()) {
         this.classList.add('active');
+        this.anchor.focus();
       }
     }
 

@@ -93,7 +93,6 @@
 
     box-shadow: -20px 20px 60px var(--shadow);
     
-    
   }
 
   .grid-container > * {
@@ -130,14 +129,14 @@
       padding-inline: 20px;
     }
 
-    > :not(aside,:has(> .active)):hover {
-      outline: 1px solid white;
+    > :not(aside,:has(> :focus)):hover {
+      border: 1px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
       z-index:2;
     }
 
-  :has(> .active) {
-    border: 1px solid white;
+  :has(> .active > :focus) {
+    /*border: 1px solid red;*/
     animation: 0.125s ease-out normal forwards link-down;
     view-transition-name: disabled;
     pointer-events: none;
