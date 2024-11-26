@@ -88,7 +88,6 @@
             const text = await response.text();
             //this.contentMap.set(url, text);
             sessionStorage.setItem(url, text);
-            sessionStorage.setItem('nextContent', text);
             contentElement.innerHTML = text;
             keep()
             //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
@@ -148,6 +147,7 @@
     }
 
     backgroundFetch(contentUrl) {
+      if(!sessionStorage.getItem(contentUrl)) {
       fetch(contentUrl)
         .then(response => {
           if (!response.ok) {
@@ -164,6 +164,7 @@
         .catch(error => {
           // if(this.router.debug) console.error('Fetch error:', error);
         });
+      }
     }
   }
 
