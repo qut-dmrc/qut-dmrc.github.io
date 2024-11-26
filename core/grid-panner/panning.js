@@ -1,3 +1,5 @@
+let debug = window.debug ?? false;
+
 let xPanTarget = 0;
 let yPanTarget = 0;
 let xPanCurrent = 0;
@@ -92,12 +94,12 @@ function isMobileDevice() {
 // Add or remove the event listener based on the device type
 function setupEventListeners() {
   if (isMobileDevice()) {
-    console.log('Mobile-like viewport detected. Removing mousemove event listener.');
+    if(debug) console.log('Mobile-like viewport detected. Removing mousemove event listener.');
 
     gridContainer.style.transform = null;
     document.removeEventListener('mousemove', handleMouseMove);
   } else {
-    console.log('Desktop-like viewport detected. Adding mousemove event listener.');
+    if(debug) console.log('Desktop-like viewport detected. Adding mousemove event listener.');
     document.addEventListener('mousemove', handleMouseMove);
   }
 }

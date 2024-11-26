@@ -20,7 +20,7 @@
     contentMap = new Map();
     routes = [];
 
-    debug = false;
+    debug = window.debug ?? false;
 
     constructor() {
       super();
@@ -65,7 +65,7 @@
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
-      // if(this.debug) console.log('Setting', last);
+      if(this.debug) console.log('Setting', last);
       this.contentElement.innerHTML = last;
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
@@ -89,8 +89,8 @@
             //this.contentMap.set(url, text);
             sessionStorage.setItem(url, text);
             contentElement.innerHTML = text;
-            keep()
             //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
+            keep()
           }
           for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
         } catch (error) {
@@ -134,7 +134,7 @@
 
       if (new URL(href, document.baseURI).toString() == location.toString()) {
         window.addEventListener("load", async () => {
-          // if(this.router.debug) console.log('Called viewTransition from route')
+          if(this.router.debug) console.log('Called viewTransition from route')
           await this.router.viewTransition(
             new URL(content, document.baseURI).toString(),
           );
@@ -158,11 +158,10 @@
         .then(data => {
           // Store the fetched data
           sessionStorage.setItem(contentUrl, data)
-          //if(this.router.debug) 
-          console.log('Prefetched content:', contentUrl, data);
+          if(this.router.debug) console.log('Prefetched content:', contentUrl, data);
         })
         .catch(error => {
-          // if(this.router.debug) console.error('Fetch error:', error);
+          if(this.router.debug) console.error('Fetch error:', error);
         });
       }
     }
