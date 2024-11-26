@@ -3,7 +3,7 @@
   ::view-transition-group(disabled),
   ::view-transition-old(disabled),
   ::view-transition-new(disabled) {
-    animation-duration: 0s !important;
+    animation-duration: 0s!important;
   }
 
   main {
