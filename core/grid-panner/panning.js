@@ -34,7 +34,7 @@ function updatePanning() {
   gridContainer.style.transform = `translate(${xPanCurrent}px, ${yPanCurrent}px)`;
 
   // Store the panning state in sessionStorage
-  localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
 
   // Continue animating until the target position is reached
   if (Math.abs(xPanTarget - xPanCurrent) > 0.1 || Math.abs(yPanTarget - yPanCurrent) > 0.1) {
@@ -44,7 +44,7 @@ function updatePanning() {
 
 // Retrieve the panning state from sessionStorage and apply it
 function applyPanningState() {
-  const storedState = localStorage.getItem('panningState');
+  const storedState = sessionStorage.getItem('panningState');
   if (storedState) {
     const { x, y } = JSON.parse(storedState);
     xPanCurrent = x;
@@ -111,13 +111,13 @@ applyPanningState();
 setupEventListeners();
 
 /*window.addEventListener('pageswap', async (event) => { 
-  localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
   applyPanningState();
   updatePanning();
 })
 
 window.addEventListener('pagereveal', async (event) => { 
-  localStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
   applyPanningState();
   updatePanning()
 })*/

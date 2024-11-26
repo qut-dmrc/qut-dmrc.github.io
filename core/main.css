@@ -124,7 +124,7 @@
 
   .active {
     border: 1px solid white;
-    animation: 0.16s cubic-bezier(0.64, 0.57, 0.67, 1.53) normal forwards link-down;
+    animation: 0.125s ease-out normal forwards link-down;
     view-transition-name: disabled;
   }
   
