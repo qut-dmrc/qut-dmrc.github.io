@@ -75,7 +75,7 @@
       if (href == document.location.toString()) return;
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
-      history.pushState(contentUrl, "", href);
+      history.pushState({}, "", href);
       console.log('href')
       this.viewTransition(contentUrl);
     }
