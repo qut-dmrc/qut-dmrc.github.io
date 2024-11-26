@@ -1,12 +1,12 @@
 @layer reset, theme, transitions, layout, pages, grid, components;
 
-@view-transition {
-  navigation: none;
-}
-
 /*@import url('uses/anim.css') layer(transitions);
 @import url('uses/grid.css') layer(layout);
 @import url('uses/info.css') layer(components);*/
+
+@view-transition {
+  navigation: none;
+}
 
 @view-transition {
   navigation: none;
@@ -123,7 +123,7 @@
     }
 
   .active {
-    outline: 1px solid red;
+    border: 1px solid white;
     animation: 0.16s cubic-bezier(0.64, 0.57, 0.67, 1.53) normal forwards link-down;
     view-transition-name: disabled;
   }
