@@ -1,5 +1,9 @@
 @layer reset, theme, transitions, layout, pages, grid, components;
 
+@view-transition {
+  navigation: none;
+}
+
 /*@import url('uses/anim.css') layer(transitions);
 @import url('uses/grid.css') layer(layout);
 @import url('uses/info.css') layer(components);*/
