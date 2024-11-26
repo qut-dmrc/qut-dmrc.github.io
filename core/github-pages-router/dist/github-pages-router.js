@@ -33,10 +33,10 @@
       if (!this.contentElement) console.error("Cannot find contentElement");
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "popstate") {
         const contentUrl = this.contentUrlFromLocation(location.toString());
-        if (contentUrl) this.viewTransition(contentUrl);
+        if (contentUrl) await this.viewTransition(contentUrl);
       }
     }
 
@@ -50,19 +50,19 @@
       }
     }
 
-    navigate(event) {
+    async navigate(event) {
       event.preventDefault();
       const { href } = event.target;
       if (href == document.location.toString()) return;
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
-      history.pushState(contentUrl, "", href);
+      history.pushState({}, "", href);
       console.log('href')
-      this.viewTransition(contentUrl);
+      await this.viewTransition(contentUrl);
     }
 
-    /*async*/ viewTransition(contentUrl) {
-      if (!document.startViewTransition) return this.updateContent(contentUrl);
+    async viewTransition(contentUrl) {
+      if (!document.startViewTransition) return await this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
       // console.log('Setting', last);
       this.contentElement.innerHTML = last;
@@ -132,7 +132,7 @@
       this.router.routes.push({ href, content });
       if (new URL(href, document.baseURI).toString() == location.toString()) {
         console.log('Called viewTransition from route')
-        this.router.viewTransition(
+        await this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );
       }
@@ -158,9 +158,9 @@
       return this.querySelector("a");
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
   }
 
@@ -188,9 +188,9 @@
       return this.querySelector("a");
     }
 
-    handleEvent(event) {
+    async handleEvent(event) {
       if (event.type == "click" && event.target == this.anchor)
-        this.router?.navigate(event);
+        await this.router?.navigate(event);
     }
 
     setAriaCurrent() {
