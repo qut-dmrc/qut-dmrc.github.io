@@ -5,7 +5,7 @@
       customElements.define(elementName, ElementClass);
   }
 
-  let main = document.getElementsByTagName('main')
+  let main = document.getElementsByTagName('main');
 
   window.addEventListener('pageswap', async (event) => {
 
