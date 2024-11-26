@@ -1,8 +1,13 @@
+
 (function GitHubPagesRouter() {
+  let perf = performance.now()
 
   function defineComponent(elementName, ElementClass) {
-    if (!customElements.get(elementName))
+    
+    if (!customElements.get(elementName)) {
       customElements.define(elementName, ElementClass);
+      console.log(elementName,'defined in', (performance.now()-perf).toFixed(2))
+    }
   }
 
   let main =  document.querySelector('main')
@@ -122,7 +127,7 @@
     console.log('Finding parent')
     while (element) {
       if (element.localName == "ghp-router") {
-        console.log('Parent found in', performance.now()-perf)
+        console.log('Parent found in', (performance.now()-perf).toFixed(2))
         return element;
       }
       element = element.parentElement;
