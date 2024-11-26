@@ -28,7 +28,7 @@
     --background: #16161b;
     --foreground: white;
 
-    --shadow: #18181a;
+    --shadow: rgba(255,255,255,0);
     --popout: 0.5rem;
     --colwidth: 4rem;
     --rowheight: 3.5rem;
@@ -72,8 +72,8 @@
 
     display: flex;
 
-    padding-bottom:5%;
-    padding-right:5%;
+    padding-bottom:10%;
+    padding-right:20%;
     justify-content: center;
     align-items: center;
 
@@ -130,11 +130,13 @@
 
     :root {
       --colwidth: calc(minmax(4rem, 1fr));
+      --rowheight:2rem;
     }
 
     menu.panner {
       align-items: start; 
       padding: 2rem;
+      transform: unset;
     }
 
     .grid-container {
@@ -144,11 +146,15 @@
 
       > * {
         grid-column: span 8;
-        grid-row: span 2;
+        grid-row: span 3;
+      }
+
+      > aside {
+        grid-row: span 4;
       }
 
       > :first-child {
-        grid-row:span 3;
+        grid-row:span 4;
       }
 
       > :not(:last-child) {
@@ -181,7 +187,7 @@
     }
 
     ul:not(:has(> .active), :has(> :focus)):hover {
-      outline: 2px solid white;
+      outline: 1px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
       z-index: 2;
     }
@@ -189,7 +195,7 @@
     /* issue: not always triggered between pageswaps */
     ul:has(> .active) {
       transform: translate(var(--popout), calc(-1 * var(--popout)));
-      animation: 0.125s ease-out normal forwards link-down;
+      animation: 0.1s ease-out normal forwards link-down;
       view-transition-name: disabled;
       pointer-events: none;
     }
