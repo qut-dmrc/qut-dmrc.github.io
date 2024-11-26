@@ -49,11 +49,18 @@
       color: white;
     }
 
-    > :not(aside):hover {
+    > :not(aside,.active):hover {
       outline: 1px solid white;
       transform: translate(0.5rem, -0.5rem);
+      z-index:2;
     }
 
+  .active {
+    outline: 1px solid red;
+    animation: 0.15s cubic-bezier(0.64, 0.57, 0.67, 1.53) normal forwards link-down;
+    view-transition-name: disabled;
+  }
+  
     h1 {
       all: unset;
       font-size: 2em;
@@ -67,5 +74,5 @@
       display: block;
     }
   }
-
+  
 }

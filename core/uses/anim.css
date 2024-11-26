@@ -1,4 +1,13 @@
 @layer transitions {
+
+  
+::view-transition-group(disabled),
+::view-transition-old(disabled),
+::view-transition-new(disabled) {
+    animation-duration: 0s !important;
+}
+
+
   main {
     view-transition-name: main-content;
 
@@ -46,4 +55,34 @@
   ::view-transition-new(page-section) {
     animation: 0.6s 0.075s ease both main-enter;
   }
+
+  @keyframes link-up {
+    from {
+      transform: translate(0, 0);
+    }
+
+    to {
+      transform: translate(0.5rem, -0.5rem);
+    }
+  }
+
+  @keyframes link-down {
+    from {
+      transform: translate(0.5rem, -0.5rem);
+    }
+
+    to {
+      transform: translate(0, 0);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translate(0.5rem, -0.5rem);
+    }
+    50% {
+      transform: translate(0rem, 0rem);
+    }
+  }
+
 }
