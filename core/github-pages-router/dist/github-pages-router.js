@@ -130,15 +130,17 @@
         console.error("Missing href or content attribute");
         return;
       }
+      
       this.router.routes.push({ href, content });
-      window.addEventListener("load",async()=>{
-        if (new URL(href, document.baseURI).toString() == location.toString()) {
+
+      if (new URL(href, document.baseURI).toString() == location.toString()) {
+        window.addEventListener("load",async()=>{
           // if(this.router.debug) console.log('Called viewTransition from route')
           await this.router.viewTransition(
             new URL(content, document.baseURI).toString(),
           );
-        }
-      })
+        })
+      }
     }
   }
 
