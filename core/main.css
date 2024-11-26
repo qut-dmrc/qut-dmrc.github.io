@@ -15,7 +15,7 @@
   }
 
   ul {
-    margin:0;
+    margin: 0;
     padding: 0;
   }
 
@@ -27,8 +27,8 @@
     --background: #16161b;
     --shadow: #18181a;
     --foreground: white;
-    --popout: 0.7rem;
-    --colwidth: 4.5rem;
+    --popout: 0.5rem;
+    --colwidth: 4rem;
     --rowheight: 3.5rem;
   }
 }
@@ -42,7 +42,8 @@
     background-color: var(--background);
   }
 
-  body> :first-child {/*ghp-router*/
+  body > :first-child {
+    /*ghp-router*/
     position: fixed;
     display: block;
     left: 0;
@@ -66,7 +67,7 @@
 
     /*margin-inline: 10% 90%;
     margin-block: 10%;*/
-    
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,10 +93,10 @@
     transform-origin: 40% 50%;
 
     box-shadow: -20px 20px 60px var(--shadow);
-    
+
   }
 
-  .grid-container > * {
+  .grid-container>* {
 
     grid-column: span 4;
     grid-row: span 3;
@@ -111,7 +112,7 @@
 
   }
 
-  .grid-container > aside {
+  .grid-container>aside {
     grid-column: span 8;
     grid-row: span 2;
   }
@@ -129,19 +130,20 @@
       padding-inline: 20px;
     }
 
-    > :not(aside,:has(> :focus)):hover {
+    ul:hover:not(:has(> .active), :has(> :focus)) {
       border: 1px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
-      z-index:2;
+      z-index: 2;
     }
 
-  :has(> .active > :focus) {
-    /*border: 1px solid red;*/
-    animation: 0.125s ease-out normal forwards link-down;
-    view-transition-name: disabled;
-    pointer-events: none;
-  }
-  
+    ul:has(> .active) {
+      border: 1px solid white;
+      transform: translate(var(--popout), calc(-1 * var(--popout)));
+      animation: 0.125s ease-out normal forwards link-down;
+      view-transition-name: disabled;
+      pointer-events: none;
+    }
+
     h1 {
       all: unset;
       font-size: 2em;
