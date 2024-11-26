@@ -67,9 +67,11 @@
       let last = sessionStorage.getItem('lastVisit')
       if(this.debug) console.log('Setting', last);
       this.contentElement.innerHTML = last;
-      document.startViewTransition(async () => {
+      const transition = document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
       });
+
+      await transition.finished;
 
     }
 
