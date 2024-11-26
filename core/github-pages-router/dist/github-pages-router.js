@@ -20,6 +20,8 @@
     contentMap = new Map();
     routes = [];
 
+    debug = false;
+
     constructor() {
       super();
       window.GHPRouter = this;
@@ -57,14 +59,13 @@
       const contentUrl = this.contentUrlFromLocation(href);
       if (!contentUrl) return;
       history.pushState({}, "", href);
-      console.log('href')
       await this.viewTransition(contentUrl);
     }
 
     async viewTransition(contentUrl) {
       if (!document.startViewTransition) return await this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
-      // console.log('Setting', last);
+      // if(this.debug) console.log('Setting', last);
       this.contentElement.innerHTML = last;
       document.startViewTransition(async () => {
         await this.updateContent(contentUrl);
@@ -131,7 +132,7 @@
       }
       this.router.routes.push({ href, content });
       if (new URL(href, document.baseURI).toString() == location.toString()) {
-        console.log('Called viewTransition from route')
+        // if(this.router.debug) console.log('Called viewTransition from route')
         await this.router.viewTransition(
           new URL(content, document.baseURI).toString(),
         );

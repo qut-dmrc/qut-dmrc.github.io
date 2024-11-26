@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DMRC - Research code repository</title>
+  
   <link rel="stylesheet" href="./core/main.css" />
   <link rel="stylesheet" href="./core/uses/anim.css" />
   <link rel="stylesheet" href="./core/uses/grid.css" />
@@ -16,7 +17,7 @@
 
   <ghp-router>
 
-    <ghp-route href="./" content="./post/base.html"></ghp-route>
+    <ghp-route href="./home" content="./post/base.html"></ghp-route>
     <ghp-route href="./page1" content="./post/page1.html"></ghp-route>
     <ghp-route href="./page2" content="./post/page2.html"></ghp-route>
     <ghp-route href="./page3" content="./post/page3.html"></ghp-route>
@@ -27,7 +28,7 @@
       <nav role="navigation" class="grid-container">
 
         <ghp-navlink>
-          <a href="./" aria-current="">
+          <a href="./home" aria-current="">
             <div>
               <h1>DMRC</h1>
               <p>research code repository</p>
@@ -81,9 +82,9 @@
       -->
   </main>
 
-  <script>console.log('On index.html'); window.GHPContext = 'index';</script>
-  <script src="./core/github-pages-router/dist/github-pages-router.js"></script>
+  <script>console.log('On index.html'); window.GHPContext = 'index'; window.location.pathname = '/home' </script>
   <script src="./core/grid-panner/panning.js"></script>
+  <script src="./core/github-pages-router/dist/github-pages-router.js"></script>
 
 </body>
 

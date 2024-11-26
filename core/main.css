@@ -1,20 +1,11 @@
-@layer reset, theme, layout, pages, components,transitions;
-
-@view-transition {
-  navigation: none;
-}
+@layer reset, theme, transitions, layout, pages, components;
 
 /*@import url('uses/anim.css') layer(transitions);
 @import url('uses/grid.css') layer(layout);
 @import url('uses/info.css') layer(components);*/
 
-@layer theme {
-  :root {
-
-    --background: #16161b;
-    --shadow: #18181a;
-    --foreground: white;
-  }
+@view-transition {
+  navigation: none;
 }
 
 @layer reset {
@@ -23,6 +14,15 @@
     box-sizing: border-box;
   }
 
+}
+
+@layer theme {
+  :root {
+
+    --background: #16161b;
+    --shadow: #18181a;
+    --foreground: white;
+  }
 }
 
 @layer layout {
@@ -34,11 +34,7 @@
     background-color: var(--background);
   }
 
-}
-
-@layer components {
-
-  ghp-router {
+  body> :first-child {/*ghp-router*/
     position: fixed;
     display: block;
     left: 0;
@@ -51,7 +47,12 @@
     box-sizing: border-box;
   }
 
-  menu { /* panner */
+}
+
+@layer components {
+
+  menu {
+    /* panner */
     width: 100dvw;
     height: 100dvh;
 
@@ -62,9 +63,76 @@
     transform-origin: 50% 50%;
 
   }
+
+  .grid-container {
+
+    display: grid;
+
+    grid-auto-columns: 5rem;
+    grid-auto-rows: 3.5rem;
+    grid-auto-flow: dense;
+    gap: 0% 0%;
+
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+
+    transform: rotate(-35deg) skew(22deg);
+    /*transform-origin: 78% 0;*/
+
+    box-shadow: -20px 20px 60px var(--shadow);
+    
+  }
+
+  .grid-container > * {
+
+    grid-column: span 4;
+    grid-row: span 3;
+    background-color: var(--background);
+    color: white;
+    padding-block: 16px;
+    padding-inline: 20px;
+
+    -webkit-column-break-inside: avoid;
+    column-break-inside: avoid;
+
+    transition: 200ms transform;
+
+  }
+
+  .grid-container > aside {
+    grid-column: span 8;
+    grid-row: span 2;
+  }
+
+  .grid-container {
+
+    a>* {
+      width: 100%;
+      height: 100%;
+      color: white;
+    }
+
+    > :not(aside):hover {
+      outline: 1px solid white;
+      transform: translate(0.5rem, -0.5rem);
+    }
+
+    h1 {
+      all: unset;
+      font-size: 2em;
+      font-weight: bold;
+      display: block;
+    }
+
+    p {
+      all: unset;
+      font-size: 1rem;
+      display: block;
+    }
+  }
+
 }
-
-
 
 
 /*@media (pointer:none),
