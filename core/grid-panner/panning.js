@@ -84,11 +84,6 @@ function handleMouseMove(event) {
   
 }
 
-window.addEventListener('pagereveal', (event) => { 
-  sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
-});
-
-
 // Function to detect if the device is in a mobile-like viewport
 function isMobileDevice() {
   return window.matchMedia("(max-width: 768px)").matches;
@@ -115,6 +110,10 @@ setupEventListeners();
 
 window.addEventListener('pageswap', async (event) => { 
   sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+})
+
+window.addEventListener('pagereveal', async (event) => { 
+  applyPanningState();
 })
 
 // Listen for changes in the viewport size
