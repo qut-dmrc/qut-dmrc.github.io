@@ -19,19 +19,19 @@
   }
 
   ::view-transition-old(page-heading) {
-    animation: 0.6s 0.075s ease both main-exit;
+    animation: 0.5s 0.075s ease both main-exit;
   }
 
   ::view-transition-new(page-heading) {
-    animation: 0.6s 0.0s ease both main-enter;
+    animation: 0.5s 0.0s ease both main-enter;
   }
 
   ::view-transition-old(page-section) {
-    animation: 0.6s ease both main-exit;
+    animation: 0.5s ease both main-exit;
   }
 
   ::view-transition-new(page-section) {
-    animation: 0.6s 0.075s ease both main-enter;
+    animation: 0.5s 0.075s ease both main-enter;
   }
 
   @keyframes main-enter {
