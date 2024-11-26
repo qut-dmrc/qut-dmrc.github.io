@@ -6,7 +6,7 @@
 
   let main =  document.querySelector('main')
 
-  window.addEventListener('pageswap', async (event) => { 
+  window.addEventListener('pageswap', (event) => { 
     sessionStorage.setItem('lastVisit', main.innerHTML);
   });
 

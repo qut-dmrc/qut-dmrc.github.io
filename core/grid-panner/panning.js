@@ -81,7 +81,13 @@ function handleMouseMove(event) {
 
   // Start the panning update loop
   updatePanning();
+  
 }
+
+window.addEventListener('pageswap', (event) => { 
+  sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+});
+
 
 // Function to detect if the device is in a mobile-like viewport
 function isMobileDevice() {
