@@ -1,7 +1,3 @@
-@view-transition {
-  navigation: none;
-}
-
 @layer transitions {
   main {
     view-transition-name: main-content;

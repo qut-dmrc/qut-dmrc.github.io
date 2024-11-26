@@ -1,5 +1,9 @@
 @layer reset, theme, layout, pages, components,transitions;
 
+@view-transition {
+  navigation: none;
+}
+
 /*@import url('uses/anim.css') layer(transitions);
 @import url('uses/grid.css') layer(layout);
 @import url('uses/info.css') layer(components);*/
@@ -30,6 +34,10 @@
     background-color: var(--background);
   }
 
+}
+
+@layer components {
+
   ghp-router {
     position: fixed;
     display: block;
@@ -54,7 +62,6 @@
     transform-origin: 50% 50%;
 
   }
-
 }
 
 
