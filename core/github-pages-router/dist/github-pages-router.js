@@ -118,8 +118,13 @@
   defineComponent("ghp-router", GHPRouter);
   function findParentRouter(initialElement) {
     let { parentElement: element } = initialElement;
+    let perf = performance.now()
+    console.log('Finding parent')
     while (element) {
-      if (element.localName == "ghp-router") return element;
+      if (element.localName == "ghp-router") {
+        console.log('Parent found in', performance.now()-perf)
+        return element;
+      }
       element = element.parentElement;
     }
     throw new Error(`No ghp-router found for element ${initialElement}`);
