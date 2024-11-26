@@ -2,7 +2,7 @@
   navigation: auto;
 }*/
 
-@layer transitions {
+/*@layer transitions {*/
   main {
     view-transition-name: main-content;
 
@@ -50,4 +50,4 @@
   ::view-transition-new(page-section) {
     animation: 0.6s 0.075s ease both page-enter;
   }
-}
+/*}*/
