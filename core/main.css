@@ -1,4 +1,4 @@
-@layer reset, theme, transitions, layout, pages, components;
+@layer reset, theme, transitions, layout, pages, grid, components;
 
 /*@import url('uses/anim.css') layer(transitions);
 @import url('uses/grid.css') layer(layout);
@@ -49,7 +49,7 @@
 
 }
 
-@layer components {
+@layer grid {
 
   menu.panner {
     /* panner */
