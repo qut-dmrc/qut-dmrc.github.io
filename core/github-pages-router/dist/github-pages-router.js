@@ -41,6 +41,11 @@
     contentMap = new Map();
     routes = [];
 
+    constructor() {
+      super();
+      window.GHPRouter = this;
+    }
+
     connectedCallback() {
       addEventListener("popstate", this);
       this.contentElement = document.querySelector(
@@ -75,11 +80,8 @@
       this.viewTransition(contentUrl);
     }
 
-    viewTransition(contentUrl) {
-      /*if (!document.startViewTransition) {
-        this.updateContent(contentUrl);
-        return;
-      }*/
+    /*async*/ viewTransition(contentUrl) {
+      if (!document.startViewTransition) return this.updateContent(contentUrl);
       let last = sessionStorage.getItem('lastVisit')
       // console.log('Setting', last);
       this.contentElement.innerHTML = last;
@@ -87,47 +89,46 @@
         await this.updateContent(contentUrl);
       });
 
-    } 
+    }
 
     async updateContent(url) {
       const { contentElement } = this;
       if (!contentElement) return;
 
-      return new Promise(async (keep,drop)=> { 
+      return new Promise(async (keep,drop)=> {
         try {
-          if (this.contentMap.has(url)) {
-            //contentElement.innerHTML = this.contentMap.get(url);
-            contentElement.innerHTML = sessionStorage.getItem(url);
-            keep();
-          } else {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Failed to fetch content from ${url}`);
-            const text = await response.text();
-            //this.contentMap.set(url, text);
-            sessionStorage.setItem(url,text);
-            contentElement.innerHTML = text;
+        if (sessionStorage.getItem(url)) {
+          contentElement.innerHTML = //this.contentMap.get(url);
+            sessionStorage.getItem(url);
             keep()
-          }
-          requestAnimationFrame(() => {
-            for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
-          });
-        } catch (error) {
-          console.error(`Error updating content for ${url}:`, error);
-          drop(error);
+        } else {
+          const response = await fetch(url);
+          const text = await response.text();
+          //this.contentMap.set(url, text);
+          sessionStorage.setItem(url,text);
+          sessionStorage.setItem('nextContent',text);
+          contentElement.innerHTML = text;
+          keep()
+          //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
         }
+        for (const navlink of this.navlinks.values()) navlink.setAriaCurrent();
+      } catch (error) {
+        console.error(error);
+        drop(error);
+      }
       })
     }
-    
   }
 
   defineComponent("ghp-router", GHPRouter);
   function findParentRouter(initialElement) {
-    let { parentElement: element } = initialElement;
+    /*let { parentElement: element } = initialElement;
     while (element) {
       if (element.localName == "ghp-router") return element;
       element = element.parentElement;
     }
-    throw new Error(`No ghp-router found for element ${initialElement}`);
+    throw new Error(`No ghp-router found for element ${initialElement}`);*/
+    return window.GHPRouter;
   }
 
   class GHPRoute extends HTMLElement {
