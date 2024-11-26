@@ -116,18 +116,13 @@
   class GHPRoute extends HTMLElement {
     router = void 0;
 
-    constructor() {
-      super()
+    async connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
         console.error(error);
         return;
       }
-    }
-
-    async connectedCallback() {
-      
       const href = this.getAttribute("href");
       const content = this.getAttribute("content");
       if (!href || !content) {
@@ -150,17 +145,12 @@
 
     router = void 0;
 
-    constructor() {
-      super();
+    connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
         console.error(error);
       }
-    }
-
-    connectedCallback() {
-      
       this.anchor?.addEventListener("click", this);
     }
 
@@ -179,16 +169,12 @@
   class GHPNavlink extends HTMLElement {
     router = void 0;
 
-    constructor() {
+    connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
         console.error(error);
       }
-    }
-    
-    connectedCallback() {
-     
       this.anchor?.addEventListener("click", this);
       this.setAriaCurrent();
       this.router?.navlinks.add(this);
