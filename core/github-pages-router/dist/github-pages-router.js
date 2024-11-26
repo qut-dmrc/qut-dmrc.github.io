@@ -5,11 +5,11 @@
       customElements.define(elementName, ElementClass);
   }
 
-  let main = document.querySelector('main')
+  let main = document.getElementsByTagName('main')
 
   window.addEventListener('pageswap', async (event) => {
 
-    sessionStorage.setItem('lastVisit', document.querySelector('main').innerHTML);
+    sessionStorage.setItem('lastVisit', main[0].innerHTML);
 
   });
 

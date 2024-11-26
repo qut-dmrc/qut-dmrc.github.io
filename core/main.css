@@ -130,7 +130,7 @@
       padding-inline: 20px;
     }
 
-    ul:hover:not(:has(> .active), :has(> :focus)) {
+    ul:not(:has(> .active), :has(> :focus)):hover {
       border: 1px solid white;
       transform: translate(var(--popout), calc(-1 * var(--popout)));
       z-index: 2;
