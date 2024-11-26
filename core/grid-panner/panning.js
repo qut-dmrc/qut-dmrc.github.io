@@ -110,10 +110,12 @@ setupEventListeners();
 
 window.addEventListener('pageswap', async (event) => { 
   sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  updatePanning();
 })
 
 window.addEventListener('pagereveal', async (event) => { 
   sessionStorage.setItem('panningState', JSON.stringify({ x: xPanCurrent, y: yPanCurrent }));
+  updatePanning()
 })
 
 // Listen for changes in the viewport size

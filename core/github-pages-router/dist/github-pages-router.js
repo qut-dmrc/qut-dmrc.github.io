@@ -116,7 +116,7 @@
   class GHPRoute extends HTMLElement {
     router = void 0;
 
-    /*async*/ connectedCallback() {
+    async connectedCallback() {
       try {
         this.router = findParentRouter(this);
       } catch (error) {
