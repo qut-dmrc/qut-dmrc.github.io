@@ -106,7 +106,7 @@
           const text = await response.text();
           //this.contentMap.set(url, text);
           sessionStorage.setItem(url,text);
-          sessionStorage.setItem('nextContent',text);
+          // sessionStorage.setItem('nextContent',text);
           contentElement.innerHTML = text;
           keep()
           //localStorage.setItem('contentMap', JSON.stringify(Array.from(this.contentMap.entries())));
