@@ -147,6 +147,8 @@
 
     }
 
+    /* not really background fetch-> needs worker */
+
     backgroundFetch(contentUrl) {
       // if not cached and not on root
       if(!sessionStorage.getItem(contentUrl) && location.pathname !== '/') {
