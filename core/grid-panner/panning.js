@@ -104,13 +104,13 @@ function setupEventListeners() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", (event) => {
+//document.addEventListener("DOMContentLoaded", (event) => {
   // Apply the panning state when the page loads
   applyPanningState();
   // Initial setup of event listeners
   setupEventListeners();
   console.log("Panning active");
-});
+//});
 
 
 /*window.addEventListener('pageswap', async (event) => { 
