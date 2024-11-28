@@ -144,7 +144,7 @@
       }
 
       let contentUrl = new URL(content, document.baseURI).toString()
-      this.backgroundFetch(contentUrl);
+      /*this.backgroundFetch(contentUrl);*/
 
     }
 
