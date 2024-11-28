@@ -82,9 +82,11 @@
       return new Promise(async (keep, drop) => {
         try {
           if (sessionStorage.getItem(url)) {
-            contentElement.innerHTML = //this.contentMap.get(url);
-              sessionStorage.getItem(url);
-            keep()
+            setTimeout(() => {
+              contentElement.innerHTML = //this.contentMap.get(url);
+                sessionStorage.getItem(url);
+                keep()
+              }, /* notice, no timeout here */)
           } else {
             const response = await fetch(url);
             const text = await response.text();
@@ -104,6 +106,8 @@
   }
 
   defineComponent("ghp-router", GHPRouter);
+
+  /* rewrite as contextRequestPattern */
 
   function findParentRouter(initialElement) {
     /*let { parentElement: element } = initialElement;
